@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <key name="Software">
 	<key name="ConEmu">
-		<key name=".Vanilla" modified="2021-11-24 12:23:49" build="210912">
+		<key name=".Vanilla" modified="2021-11-24 16:20:18" build="210912">
 			<value name="ColorTable00" type="dword" data="0036342e"/>
 			<value name="ColorTable01" type="dword" data="00a46534"/>
 			<value name="ColorTable02" type="dword" data="00069a4e"/>
@@ -913,7 +913,7 @@
 			</key>
 			<value name="StartCreateDelay" type="ulong" data="100"/>
 			<value name="DefaultTerminalDebugLog" type="hex" data="00"/>
-			<value name="LastMonitor" type="string" data="0,0,3440,1390"/>
+			<value name="LastMonitor" type="string" data="0,0,3440,1380"/>
 			<value name="Restore2ActiveMon" type="hex" data="00"/>
 			<value name="DownShowExOnTopMessage" type="hex" data="00"/>
 			<value name="EnvironmentSet" type="multi">

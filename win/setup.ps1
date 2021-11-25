@@ -46,6 +46,16 @@ if ($null -ne (Get-Command cmder).Name) {
   New-SoftLink -Source $PSScriptRoot\cmder\ConEmu.xml -Target $CMDERHOME\vendor\conemu-maximus5\ConEmu.xml 
 }
 
+# Powershell modules
+if ($null -eq (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
+  Install-Module Terminal-Icons -Force
+}
+
+if ($null -eq (Get-Module -ListAvailable -Name PSReadLine).Name) {
+  Install-Module PowershellGet -Force
+  Install-Module PSReadLine -AllowPrerelease -Force
+}
+
 # VSCode
 if ($null -ne (Get-Command code).Name) {
   code --install-extension christian-kohler.path-intellisense

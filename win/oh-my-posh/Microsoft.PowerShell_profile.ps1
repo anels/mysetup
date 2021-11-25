@@ -1,18 +1,11 @@
 
 # Import-Module 'C:\tools\poshgit\dahlbyk-posh-git-9bda399\src\posh-git.psd1'
 
-if ($null -eq (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
-  Install-Module Terminal-Icons -Force
+if ($null -ne (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
+  Import-Module -Name Terminal-Icons
 }
 
-Import-Module -Name Terminal-Icons
-
-if ($null -eq (Get-Module -ListAvailable -Name PSReadLine).Name) {
-  Install-Module PowershellGet -Force
-  Install-Module PSReadLine -AllowPrerelease -Force
-}
-
-if ($host.Name -eq 'ConsoleHost')
+if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Name -eq 'ConsoleHost'))
 {
     Import-Module PSReadLine
     Set-PSReadLineOption -PredictionSource History
