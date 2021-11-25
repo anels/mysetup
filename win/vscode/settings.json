@@ -1,0 +1,75 @@
+{
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "git.autofetch": true,
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[beancount]": {
+        "editor.defaultFormatter": "dongfg.vscode-beancount-formatter"
+    },
+    "sync.autoDownload": true,
+    "sync.autoUpload": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.renderControlCharacters": true,
+    "emmet.triggerExpansionOnTab": true,
+    "indentRainbow.includedLanguages": [
+    
+    ],
+    "workbench.iconTheme": "vscode-great-icons",
+    "editor.fontFamily": "'JetBrainsMono NF', 'Fira Code Retina', Consolas, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 16,
+    "cSpell.enableFiletypes": [
+        "lookml",
+        "powershell"
+    ],
+    "git.confirmSync": false,
+    "git.enableSmartCommit": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "sync.gist": "a5f7531dfad443301311d170d8b6b19b",
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.useEditorConfig": false,
+    "gitlens.gitCommands.skipConfirmations": [
+        "fetch:command",
+        "switch:command",
+        "stash-push:command"
+    ],
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.defaultFormatter": "EditorConfig.EditorConfig",
+    "[powershell]": {
+        "editor.defaultFormatter": "ms-vscode.powershell",
+        "editor.tabSize": 2
+    },
+    "[xml]": {
+        "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "editor.renderWhitespace": "all",
+    "indentRainbow.colorOnWhiteSpaceOnly": true,
+    "editor.guides.indentation": false,
+    "workbench.colorCustomizations": {
+        "editor.lineHighlightBackground": "#1073cf2d",
+        "editor.lineHighlightBorder": "#9fced11f"
+    },
+    "editor.wordWrap": "off",
+    "diffEditor.wordWrap": "off",
+    "editor.inlayHints.enabled": false,
+    "redhat.telemetry.enabled": false,
+    "workbench.colorTheme": "One Dark Pro Darker"
+}

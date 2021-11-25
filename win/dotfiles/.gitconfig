@@ -1,0 +1,76 @@
+[include]
+  # include external gitconfig file (requires git 1.7.10+)
+  # typically, user.name and user.email is configured.
+  path = ~/.gitconfig.local
+
+[filter "lfs"]
+  process = git-lfs filter-process
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+
+[alias]
+  lg1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+  lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+  last    = log -1 HEAD
+  today   = log --since=midnight --color --graph \
+            --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+            --abbrev-commit
+  yesterday = log --since yesterday --until=midnight --color --graph \
+            --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+            --abbrev-commit
+  history = log --graph --pretty=format:'%C(yellow)%h%Creset \
+            -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' \
+            --abbrev-commit --date=short --date-order -n30
+  lg = !"git lg1"
+  sta     = status --short --branch --untracked-files=normal
+  unstage = reset HEAD --
+  discard = checkout --
+  amend   = commit --amend
+  fame = !python -m gitfame
+
+[init]
+  defaultBranch = main
+
+[push]
+  default = current # push should only push current branch, not all branches
+
+[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow
+  frag = magenta
+  old = red
+  new = green
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+
+[core]
+  # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  editor = code --wait # https://stackoverflow.com/questions/2596805/how-do-i-make-git-use-the-editor-of-my-choice-for-commits?utm_source=pocket_mylist
+
+[diff]
+  tool = meld
+  noprefix = true
+  renameLimit = 2500
+  colorMoved = True
+
+[difftool "meld"]
+  prompt = false
+  #path = C:\\Program Files (x86)\\Meld\\Meld.exe
+  external = 'C:\\Program Files (x86)\\Meld\\Meld.exe "$LOCAL" "$REMOTE"'
+
+[merge]
+  tool = meld
+
+[mergetool "meld"]
+  prompt = false
+  path = C:\\Program Files (x86)\\Meld\\Meld.exe
