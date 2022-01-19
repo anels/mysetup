@@ -71,5 +71,13 @@
     "diffEditor.wordWrap": "off",
     "editor.inlayHints.enabled": false,
     "redhat.telemetry.enabled": false,
-    "workbench.colorTheme": "One Dark Pro Darker"
+    "workbench.colorTheme": "One Dark Pro Darker",
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "diffEditor.ignoreTrimWhitespace": false,
+    "cSpell.userWords": [
+        "Xunit"
+    ],
+    "bracketPairColorizer.depreciation-notice": false
 }

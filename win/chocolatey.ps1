@@ -29,6 +29,7 @@ choco upgrade -yr --no-progress `
   sysinternals `
   treesizefree `
   vim `
+  vscode `
   windirstat `
 
 # Fonts

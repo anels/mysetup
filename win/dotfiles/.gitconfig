@@ -56,21 +56,37 @@
 [core]
   # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
   editor = code --wait # https://stackoverflow.com/questions/2596805/how-do-i-make-git-use-the-editor-of-my-choice-for-commits?utm_source=pocket_mylist
+  # vim
 
 [diff]
-  tool = meld
+  # tool = vscode
   noprefix = true
   renameLimit = 2500
   colorMoved = True
 
+[difftool]
+  prompt = true
+[difftool "vsdiffmerge"]
+  cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
+  keepBackup = false
 [difftool "meld"]
   prompt = false
   #path = C:\\Program Files (x86)\\Meld\\Meld.exe
   external = 'C:\\Program Files (x86)\\Meld\\Meld.exe "$LOCAL" "$REMOTE"'
+[difftool "vscode"]
+  cmd = "code --wait --diff $LOCAL $REMOTE"
 
 [merge]
-  tool = meld
+  # tool = vsdiffmerge
 
+[mergetool]
+  prompt = true
 [mergetool "meld"]
   prompt = false
   path = C:\\Program Files (x86)\\Meld\\Meld.exe
+[mergetool "vsdiffmerge"]
+  cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\" //m
+  keepBackup = false
+  trustExitCode = true
+
+
