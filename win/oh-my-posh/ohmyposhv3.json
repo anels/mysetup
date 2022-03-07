@@ -1,134 +1,118 @@
 {
-  "final_space": true,
-  "console_title": true,
-  "console_title_style": "template",
-  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "blocks": [
     {
-      "type": "prompt",
       "alignment": "left",
-      "horizontal_offset": 0,
-      "vertical_offset": 0,
       "segments": [
         {
-          "type": "text",
-          "style": "plain",
           "foreground": "#757575",
           "properties": {
-            "prefix": "",
-            "postfix": "",
-            "text": "\u250C "
-          }
-        },
-        {
-          "type": "path",
-          "style": "diamond",
-          "powerline_symbol": "",
-          "invert_powerline": false,
-          "foreground": "#ffffff",
-          "background": "#ff479c",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": {
-            "prefix": "  ",
-            "style": "folder"
-          }
-        },
-        {
-          "type": "git",
-          "style": "powerline",
-          "powerline_symbol": "",
-          "invert_powerline": false,
-          "foreground": "#193549",
-          "background": "#fffb38",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": {
-            "display_status": true,
-            "display_stash_count": true,
-            "display_upstream_icon": true
-          }
-        },
-        {
-          "type": "dotnet",
-          "style": "powerline",
-          "powerline_symbol": "",
-          "invert_powerline": false,
-          "foreground": "#ffffff",
-          "background": "#6CA35E",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": {
-            "display_version": true,
-            "prefix": "  "
-          }
-        },
-        {
-          "type": "root",
-          "style": "powerline",
-          "powerline_symbol": "",
-          "invert_powerline": false,
-          "foreground": "#ffffff",
-          "background": "#ffff66",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": null
-        },
-        {
-          "type": "executiontime",
+            "template": "\u250c"
+          },
           "style": "plain",
-          "foreground": "#ffffff",
-          "background": "#83769c",
-          "leading_diamond": "",
-          "trailing_diamond": "",
-          "properties": {
-            "always_enabled": true,
-            "prefix": "<transparent></> \ufa1e"
-          }
+          "type": "text"
         },
         {
-          "type": "exit",
-          "style": "diamond",
+          "background": "#ff479c",
           "foreground": "#ffffff",
-          "background": "#2e9599",
-          "leading_diamond": "",
-          "trailing_diamond": "",
+          "leading_diamond": "\ue0b6",
+          "powerline_symbol": "\ue0b0",
           "properties": {
-            "display_exit_code": false,
+            "style": "folder",
+            "template": " \ue5ff {{ .Path }} "
+          },
+          "style": "diamond",
+          "trailing_diamond": "\ue0b0",
+          "type": "path"
+        },
+        {
+          "background": "#fffb38",
+          "foreground": "#193549",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_stash_count": true,
+            "fetch_status": true,
+            "fetch_upstream_icon": true,
+            "template": " {{ .HEAD }} {{ .BranchStatus }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }}{{ if and (.Staging.Changed) (.Working.Changed) }} |{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if gt .StashCount 0}} \uf692 {{ .StashCount }}{{ end }}{{ if gt .WorktreeCount 0}} \uf1bb {{ .WorktreeCount }}{{ end }} "
+          },
+          "style": "powerline",
+          "type": "git"
+        },
+        {
+          "background": "#6CA35E",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "fetch_version": true,
+            "template": " \ue70c {{ if .Unsupported }}\uf071{{ else }}{{ .Full }}{{ end }} "
+          },
+          "style": "powerline",
+          "type": "dotnet"
+        },
+        {
+          "background": "#ffff66",
+          "foreground": "#ffffff",
+          "powerline_symbol": "\ue0b0",
+          "properties": {
+            "template": " \uf0e7 "
+          },
+          "style": "powerline",
+          "type": "root"
+        },
+        {
+          "background": "#83769c",
+          "foreground": "#ffffff",
+          "properties": {
             "always_enabled": true,
-            "error_color": "#f1184c",
-            "color_background": true,
-            "prefix": "<#83769c></> "
-          }
+            "template": "<transparent>\ue0b0</> \ufa1e{{ .FormattedMs }} "
+          },
+          "style": "plain",
+          "type": "executiontime"
+        },
+        {
+          "background": "#2e9599",
+          "background_templates": [
+            "{{ if gt .Code 0 }}#f1184c{{ end }}"
+          ],
+          "foreground": "#ffffff",
+          "properties": {
+            "always_enabled": true,
+            "template": "<#83769c>\ue0b0</> \ue23a "
+          },
+          "style": "diamond",
+          "trailing_diamond": "\ue0b4",
+          "type": "exit"
         }
-      ]
+      ],
+      "type": "prompt"
     },
     {
-      "type": "prompt",
       "alignment": "left",
       "newline": true,
       "segments": [
         {
-          "type": "text",
-          "style": "plain",
           "foreground": "#757575",
           "properties": {
-            "prefix": "",
-            "postfix": "",
-            "text": "\u2514 "
-          }
+            "template": "\u2514"
+          },
+          "style": "plain",
+          "type": "text"
         },
         {
-          "type": "text",
-          "style": "plain",
           "foreground": "#ffffff",
           "properties": {
-            "prefix": "",
-            "postfix": "",
-            "text": "$"
-          }
+            "template": "$"
+          },
+          "style": "plain",
+          "type": "text"
         }
-      ]
+      ],
+      "type": "prompt"
     }
-  ]
+  ],
+  "console_title": true,
+  "console_title_style": "template",
+  "console_title_template": "{{ .Shell }} in {{ .Folder }}",
+  "final_space": true,
+  "version": 1
 }

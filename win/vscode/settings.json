@@ -19,7 +19,7 @@
     "editor.renderControlCharacters": true,
     "emmet.triggerExpansionOnTab": true,
     "indentRainbow.includedLanguages": [
-    
+
     ],
     "workbench.iconTheme": "vscode-great-icons",
     "editor.fontFamily": "'JetBrainsMono NF', 'Fira Code Retina', Consolas, 'Courier New', monospace",
