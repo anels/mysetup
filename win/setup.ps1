@@ -11,7 +11,7 @@ Function New-SoftLink {
     if (Test-Path $Target) {
       Remove-Item $Target
     }
-    
+
     New-Item -Path $Target -ItemType SymbolicLink -Value $Source -Force
   }
   catch {

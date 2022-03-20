@@ -61,13 +61,12 @@
 
 
 [diff]
-  # tool = vscode
+  tool = meld
   noprefix = true
   renameLimit = 2500
   colorMoved = True
-
 [difftool]
-  prompt = true
+  prompt = false
 [difftool "vsdiffmerge"]
   cmd = \"C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Professional\\Common7\\IDE\\CommonExtensions\\Microsoft\\TeamFoundation\\Team Explorer\\vsdiffmerge.exe\" \"$LOCAL\" \"$REMOTE\" //t
   keepBackup = false
@@ -80,7 +79,6 @@
 
 [merge]
   # tool = vsdiffmerge
-
 [mergetool]
   prompt = true
 [mergetool "meld"]
