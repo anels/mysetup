@@ -79,7 +79,14 @@
     },
     "diffEditor.ignoreTrimWhitespace": false,
     "cSpell.userWords": [
+        "msbuild",
+        "uipath",
         "Xunit"
     ],
-    "bracketPairColorizer.depreciation-notice": false
+    "bracketPairColorizer.depreciation-notice": false,
+    "window.zoomLevel": -1,
+    "hadolint.hadolintPath": "C:\\tools\\hadolint\\hadolint.EXE",
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.python"
+    }
 }
