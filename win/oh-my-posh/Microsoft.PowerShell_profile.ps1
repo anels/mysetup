@@ -17,6 +17,7 @@ $omhJsonFilePath = "$HOME\.pwsh\ohmyposhv3.json"
 
 if (($null -ne (Get-Command oh-my-posh).Name) -And (Test-Path -Path $omhJsonFilePath -PathType Leaf)) {
   oh-my-posh --init --shell pwsh --config $omhJsonFilePath | Invoke-Expression | Out-Null
+  # oh-my-posh init pwsh --config C:\Users\ruilin.liu\AppData\Local\Programs\oh-my-posh\themes\paradox.omp.json | Invoke-Expression
 }
 
 # alias

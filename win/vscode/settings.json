@@ -28,7 +28,8 @@
     "editor.fontSize": 16,
     "cSpell.enableFiletypes": [
         "lookml",
-        "powershell"
+        "powershell",
+        "python"
     ],
     "git.confirmSync": false,
     "git.enableSmartCommit": true,
@@ -56,7 +57,7 @@
         "editor.tabSize": 2
     },
     "[xml]": {
-        "editor.defaultFormatter": "SimonSiefke.prettier-vscode"
+        "editor.defaultFormatter": "DotJoshJohnson.xml"
     },
     "[shellscript]": {
         "editor.defaultFormatter": "foxundermoon.shell-format"
@@ -79,14 +80,24 @@
     },
     "diffEditor.ignoreTrimWhitespace": false,
     "cSpell.userWords": [
+        "Kubernetes",
         "msbuild",
+        "Ruilin",
         "uipath",
         "Xunit"
     ],
     "bracketPairColorizer.depreciation-notice": false,
-    "window.zoomLevel": -1,
     "hadolint.hadolintPath": "C:\\tools\\hadolint\\hadolint.EXE",
     "[python]": {
         "editor.defaultFormatter": "ms-python.python"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[markdown]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[latex]": {
+        "editor.defaultFormatter": "mathematic.vscode-latex"
     }
 }

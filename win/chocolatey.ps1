@@ -7,8 +7,11 @@ if ($null -eq (Get-Command choco).Name) {
 choco upgrade -yr --no-progress `
   eartrumpet `
   7zip `
+  bat `
+  bulk-crap-uninstaller `
   cmder `
   contextmenumanager `
+  delta `
   dismplusplus `
   ditto `
   duf `
