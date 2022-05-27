@@ -25,7 +25,8 @@ Function New-SoftLink {
 . $PSScriptRoot\pip.ps1
 
 # git config and wsl config
-New-SoftLink -Source $PSScriptRoot\dotfiles\.gitconfig -Target $HOME\.gitconfig
+git config --global --add include.path $PSScriptRoot\dotfiles\.gitconfig
+git config --global --add include.path $HOME\.gitconfig.local
 New-SoftLink -Source $PSScriptRoot\dotfiles\.wslconfig -Target $HOME\.wslconfig
 
 # oh-my-posh

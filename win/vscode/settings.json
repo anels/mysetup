@@ -99,5 +99,8 @@
     },
     "[latex]": {
         "editor.defaultFormatter": "mathematic.vscode-latex"
-    }
+    },
+    "blockman.n01LineHeight": 0,
+    "editor.guides.bracketPairs": false,
+    "tabnine.experimentalAutoImports": true
 }
