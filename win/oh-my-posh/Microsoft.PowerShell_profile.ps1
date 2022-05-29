@@ -13,11 +13,12 @@ if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Na
     Set-PSReadLineOption -EditMode Windows
 }
 
-$omhJsonFilePath = "$HOME\.pwsh\ohmyposhv3.json"
+#$omhJsonFilePath = "$HOME\.pwsh\ohmyposhv3.json"
+$omhJsonFilePath = "$HOME\AppData\Local\Programs\oh-my-posh\themes\amro.omp.json"
 
 if (($null -ne (Get-Command oh-my-posh).Name) -And (Test-Path -Path $omhJsonFilePath -PathType Leaf)) {
-  oh-my-posh --init --shell pwsh --config $omhJsonFilePath | Invoke-Expression | Out-Null
-  # oh-my-posh init pwsh --config C:\Users\ruilin.liu\AppData\Local\Programs\oh-my-posh\themes\paradox.omp.json | Invoke-Expression
+  # oh-my-posh --init --shell pwsh --config $omhJsonFilePath | Invoke-Expression | Out-Null
+  oh-my-posh init pwsh --config $omhJsonFilePath | Invoke-Expression
 }
 
 # alias
