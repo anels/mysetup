@@ -1,6 +1,9 @@
 # VSCode
 if ($null -ne (Get-Command code).Name) {
+  # code --install-extension TabNine.tabnine-vscode
+  code --install-extension 4ops.terraform
   code --install-extension aaron-bond.better-comments
+  code --install-extension ban.spellright
   code --install-extension buster.ndjson-colorizer
   code --install-extension christian-kohler.path-intellisense
   code --install-extension CoenraadS.bracket-pair-colorizer
@@ -10,16 +13,19 @@ if ($null -ne (Get-Command code).Name) {
   code --install-extension DominicVonk.vscode-resx-editor
   code --install-extension dongfg.vscode-beancount-formatter
   code --install-extension donjayamanne.githistory
+  code --install-extension DotJoshJohnson.xml
   code --install-extension eamodio.gitlens
   code --install-extension EditorConfig.EditorConfig
   code --install-extension emmanuelbeziat.vscode-great-icons
   code --install-extension esbenp.prettier-vscode
+  code --install-extension eservice-online.vs-sharper
   code --install-extension ex-codes.pine-script-syntax-highlighter
   code --install-extension exiasr.hadolint
   code --install-extension formulahendry.code-runner
   code --install-extension formulahendry.docker-explorer
   code --install-extension foxundermoon.shell-format
   code --install-extension Fr43nk.seito-openfile
+  code --install-extension GitHub.copilot
   code --install-extension GitHub.github-vscode-theme
   code --install-extension GitHub.vscode-pull-request-github
   code --install-extension Gruntfuggly.todo-tree
@@ -27,7 +33,6 @@ if ($null -ne (Get-Command code).Name) {
   code --install-extension iceworks-team.iceworks-time-master
   code --install-extension jeff-hykin.better-dockerfile-syntax
   code --install-extension jgclark.vscode-todo-highlight
-  # code --install-extension LeetCode.vscode-leetcode
   code --install-extension Lencerf.beancount
   code --install-extension leodevbro.blockman
   code --install-extension mechatroner.rainbow-csv
@@ -61,17 +66,16 @@ if ($null -ne (Get-Command code).Name) {
   code --install-extension shd101wyy.markdown-preview-enhanced
   code --install-extension streetsidesoftware.code-spell-checker
   code --install-extension SumitSaha.learn-with-sumit-theme
-  # code --install-extension TabNine.tabnine-vscode
+  code --install-extension swyphcosmo.spellchecker
   code --install-extension TamasGBarna.whalelint
   code --install-extension Tim-Koehler.helm-intellisense
   code --install-extension timonwong.shellcheck
+  code --install-extension TylerLeonhardt.vscode-inline-values-powershell
   code --install-extension uctakeoff.vscode-counter
-  code --install-extension usernamehw.errorlens
   code --install-extension usernamehw.errorlens
   code --install-extension vincaslt.highlight-matching-tag
   code --install-extension VisualStudioExptTeam.vscodeintellicode
-  # code --install-extension wangtao0101.debug-leetcode
-  # code --install-extension XavierCai.vscode-leetcode-cpp-debug
+  code --install-extension waderyan.gitblame
   code --install-extension yzhang.markdown-all-in-one
   code --install-extension zhuangtongfa.material-theme
 }

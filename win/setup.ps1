@@ -59,3 +59,11 @@ if ($null -ne (Get-Command oh-my-posh).Name) {
 
   New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1
 }
+
+# cmder
+if ($null -ne (Get-Command cmder).Name) {
+  $CMDERHOME = (Get-Command cmder).Source | % { Split-Path -Path $_ }
+  #New-SoftLink -Source $PSScriptRoot\cmder\ConEmu.xml -Target $CMDERHOME\vendor\conemu-maximus5\ConEmu.xml
+  Copy-Item $PSScriptRoot\cmder\ConEmu.xml -Destination $CMDERHOME\vendor\conemu-maximus5 -Force
+
+}
