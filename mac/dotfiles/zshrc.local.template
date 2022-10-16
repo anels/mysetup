@@ -1,0 +1,11 @@
+# Local zsh configuration for machine-specific settings
+# This file is sourced by .zshrc and contains environment-specific settings
+
+# Define which modules to load on this machine
+# Set to "true" to load, "false" to skip
+export LOAD_GIT_TOOLS="true"
+export LOAD_UTILITY_TOOLS="true"
+
+# Uncomment and set machine-specific variables:
+# export LOOKER_LICENSE_KEY="your-license-key"
+# export LOOKER_LICENSE_EMAIL="your-email@example.com"

@@ -1,0 +1,113 @@
+[filter "lfs"]
+process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+
+[alias]
+alias = config --get-regexp ^alias\\.
+amend = commit --amend
+br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:blue)(%(committerdate:short)) [%(authorname)]' --sort=-committerdate
+bra = br -a
+discard = checkout --
+fame = !python -m gitfame
+sta = status --short --branch --untracked-files=normal
+uncommit = reset --soft HEAD^
+unstage = reset HEAD --
+cp = cherry-pick -x
+
+# logs
+lg = !git lg0 -15
+lg0 = log --graph --first-parent --abbrev-commit --decorate --color --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)'
+lg1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+last = log -1 HEAD
+today = log --since=midnight --color --graph \
+--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+--abbrev-commit
+yesterday = log --since yesterday --until=midnight --color --graph \
+--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+--abbrev-commit
+history = log --graph --pretty=format:'%C(yellow)%h%Creset \
+            -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' \
+--abbrev-commit --date=short --date-order -n30
+
+[init]
+defaultBranch = main
+
+[push]
+default = current
+
+[help]
+autocorrect = 1
+
+[color]
+ui = auto
+[color "branch"]
+current = yellow reverse
+local = yellow
+remote = green
+[color "diff"]
+meta = yellow
+frag = magenta
+old = red
+new = green
+whitespace = red reverse
+[color "status"]
+added = yellow
+changed = green
+untracked = cyan
+
+[core]
+editor = vim --nofork --noplugin -u NONE
+pager = delta
+
+[interactive]
+diffFilter = delta --color-only
+[add.interactive]
+useBuiltin = false
+
+[delta]
+navigate = true
+side-by-side = true
+line-numbers = true
+light = false
+features = unobtrusive-line-numbers decorations
+whitespace-error-style = 22 reverse
+
+[delta "unobtrusive-line-numbers"]
+line-numbers = true
+line-numbers-minus-style = "#444444"
+line-numbers-zero-style = "#444444"
+line-numbers-plus-style = "#444444"
+line-numbers-left-format = "{nm:>4}┊"
+line-numbers-right-format = "{np:>4}│"
+line-numbers-left-style = blue
+line-numbers-right-style = blue
+
+[delta "decorations"]
+commit-decoration-style = bold yellow box ul
+file-style = bold yellow ul
+file-decoration-style = none
+hunk-header-decoration-style = yellow box
+
+[diff]
+noprefix = true
+renameLimit = 2500
+colorMoved = default
+[difftool]
+prompt = false
+[difftool "meld"]
+prompt = false
+external = 'Meld.exe "$LOCAL" "$REMOTE"'
+[difftool "vscode"]
+cmd = "code --wait --diff $LOCAL $REMOTE"
+
+[merge]
+conflictstyle = diff3
+[mergetool]
+prompt = true
+[mergetool "meld"]
+prompt = false
+external = Meld.exe
