@@ -1,0 +1,16 @@
+[wsl2]
+memory=2GB # Limits VM memory in WSL 2 to 4 GB
+
+processors=2 # Makes the WSL 2 VM use two virtual processors
+
+# Sets amount of swap storage space to 8GB, default is 25% of available RAM
+swap=8GB
+
+# Sets swapfile path location, default is %USERPROFILE%\AppData\Local\Temp\swap.vhdx
+swapfile=C:\\temp\\wsl-swap.vhdx
+
+# Turn off default connection to bind WSL 2 localhost to Windows localhost
+# localhostforwarding=true
+
+# Turns on output console showing contents of dmesg when opening a WSL 2 distro for debugging
+debugConsole=true
