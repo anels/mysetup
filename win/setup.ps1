@@ -61,6 +61,7 @@ Function Install-Choco-Apps() {
   if (-Not (Check-Command -cmdname 'choco')) {
     Write-Info "Installing Chocolate for Windows..."
     gsudo { Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')) }
+    Sync-EnvVariables
   }
 
   gsudo . $PSScriptRoot\apps\chocolatey.ps1
@@ -71,18 +72,16 @@ Function Install-Scoop-Apps() {
     Write-Info "Installing Scoop for Windows..."
     # Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     irm get.scoop.sh | iex
-    scoop install git
-    scoop bucket add extras
-    scoop bucket add nerd-fonts
-    scoop bucket add versions
     scoop install aria2
     scoop config aria2-enabled true
     scoop config aria2-split 32
     scoop config aria2-max-connection-per-server 16
     scoop config aria2-min-split-size 1M
     scoop config aria2-warning-enabled false
-    scoop install scoop-completion
+    scoop config aria2-options -q
+    scoop install git
     scoop install gsudo
+    Sync-EnvVariables
   }
 
   . $PSScriptRoot\apps\scoop.ps1
@@ -107,14 +106,13 @@ Write-Info "My Setup $ScriptVersion"
 # Start App installation
 # -----------------------------------------------------------------------------
 Install-Scoop-Apps
-. $PSScriptRoot\apps\pip.ps1
 
 gsudo config LogLevel "Error" | Out-Null
 gsudo cache on
 
 Install-Choco-Apps
 
-Sync-EnvVariables
+. $PSScriptRoot\apps\pip.ps1
 
 if (Check-Command -cmdname 'code') {
   Write-Info "Setting up VS Code..."

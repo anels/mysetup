@@ -2,8 +2,21 @@ Write-Host ""
 Write-Host "Installing Applications from Scoop..." -ForegroundColor Green
 Write-Host "------------------------------------" -ForegroundColor Green
 
-scoop update *
-scoop cleanup *
+$EnabledBuckets = $(scoop bucket list).Name
+$Buckets = @(
+  "extras"
+  "nerd-fonts"
+  "versions"
+)
+
+foreach ($bucket in $Buckets) {
+  if ($bucket -notin $EnabledBuckets) {
+    scoop bucket add $bucket
+  }
+}
+
+# scoop update *
+# scoop cleanup *
 
 scoop install `
   7zip `
@@ -26,7 +39,6 @@ scoop install `
   imageglass `
   meld `
   pwsh `
-  sumatrapdf `
   potplayer `
   windirstat `
   winmerge `
@@ -37,6 +49,7 @@ scoop install `
   psreadline `
   less `
   jq `
+  scoop-completion `
   # z `
   # fzf `
   # psfzf `

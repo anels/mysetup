@@ -6,6 +6,7 @@ if ($null -ne (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
 # Import-Module -Name PSReadLine
 # Import-Module -Name PSFzf
 Import-Module -Name posh-git
+Import-Module -Name scoop-completion
 # Import-Module -name z
 
 

@@ -13,7 +13,7 @@ $Packages = @(
 
 if ($null -ne (Get-Command pip -ErrorAction:SilentlyContinue).Name) {
   $InstalledPackages = pip list -l --format json | jq -r .[].name
-  python -m pip install --upgrade pip
+  # gsudo python -m pip install --upgrade pip
   foreach ($package in $Packages) {
     if ($package -in $InstalledPackages) {
       Write-Host "${package} is already installed."

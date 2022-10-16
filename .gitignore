@@ -33,3 +33,6 @@ $RECYCLE.BIN/
 
 # VSCode
 .vscode
+
+# logs
+*.log

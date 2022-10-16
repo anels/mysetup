@@ -13,6 +13,7 @@ choco upgrade -yr --no-progress `
   treesizefree `
   vscode `
   eartrumpet `
+  sumatrapdf `
   # chocolateygui `
   # delta `
   # dismplusplus `
@@ -29,7 +30,6 @@ choco upgrade -yr --no-progress `
   # poshgit `
   # potplayer `
   # powershell-core `
-  # sumatrapdf `
   # sysinternals `
   # universal-ctags `
   # vim `
@@ -61,3 +61,6 @@ choco upgrade -yr --no-progress `
 #   jetbrainsmononf `
 #   nerdfont-hack `
 #   sourcecodepro `
+
+
+RefreshEnv
