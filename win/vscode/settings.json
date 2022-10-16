@@ -1,0 +1,291 @@
+{
+  "editor.suggestSelection": "first",
+  "git.autofetch": true,
+  "[beancount]": {
+    "editor.defaultFormatter": "dongfg.vscode-beancount-formatter"
+  },
+  "beancountFormatter.fixedCJKWidth": true,
+  "editor.renderControlCharacters": true,
+  "emmet.triggerExpansionOnTab": true,
+  "indentRainbow.includedLanguages": [],
+  "editor.fontFamily": "Maple Mono NF, CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font Mono, FiraCode Nerd Font Mono, Hack Nerd Font Mono, SauceCodePro Nerd Font Mono",
+  "editor.fontLigatures": true,
+  "editor.fontSize": 17,
+  "cSpell.enableFiletypes": [
+    "lookml",
+    "powershell",
+    "python",
+    "markdown"
+  ],
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.useEditorConfig": true,
+  "gitlens.gitCommands.skipConfirmations": [
+    "fetch:command",
+    "switch:command",
+    "stash-push:command"
+  ],
+  "omnisharp.enableRoslynAnalyzers": true,
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell",
+    "editor.tabSize": 2
+  },
+  "[xml]": {
+    "editor.defaultFormatter": "redhat.vscode-xml"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.renderWhitespace": "all",
+  "indentRainbow.colorOnWhiteSpaceOnly": true,
+  "editor.guides.indentation": false,
+  "workbench.colorCustomizations": {
+    "editor.lineHighlightBackground": "#1073cf2d",
+    "editor.lineHighlightBorder": "#9fced11f"
+  },
+  "editor.wordWrap": "off",
+  "editor.rulers": [
+    120
+  ],
+  "diffEditor.wordWrap": "off",
+  "editor.inlayHints.enabled": "on",
+  "redhat.telemetry.enabled": false,
+  "[csharp]": {
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    },
+  },
+  "python.formatting.autopep8Args": [
+    "--max-line-length",
+    "120",
+    "--experimental"
+  ],
+  "python.linting.flake8Enabled": false,
+  // "python.linting.flake8Path": "path/to/flake8",
+  "[yaml]": {
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    // "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.formatOnSave": false,
+    "diffEditor.ignoreTrimWhitespace": false
+  },
+  "kubernetes-yaml-formatter.compactSequenceIndent": true,
+  "kubernetes-yaml-formatter.includeDocumentStart": true,
+  "editor.guides.bracketPairs": true,
+  "sql.linter.run": "onType",
+  "flake8.args": [
+    "--max-line-length=120",
+    "--ignore E501,W503,E203",
+    "--config=.flake8"
+  ],
+  "isort.args": [
+    "--profile",
+    "black"
+  ],
+  "extensions.ignoreRecommendations": true,
+  "gitlens.showWelcomeOnInstall": false,
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.defaultProfile.windows": "PowerShell Core",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell Core": {
+      "path": "pwsh.exe",
+      "icon": "terminal-powershell",
+      "args": [
+        "-NoLogo"
+      ]
+    },
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": [
+        "-NoLogo"
+      ]
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [
+        "/k"
+      ],
+      "icon": "terminal-cmd"
+    }
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  // Disable welcome screen on startup
+  "workbench.welcome.enabled": false,
+  // Insert spaces when pressing Tab
+  "editor.insertSpaces": true,
+  // Minimap
+  "editor.minimap.enabled": true,
+  // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+  "editor.mouseWheelScrollSensitivity": 5,
+  // Extensions to be installed by the Extension Manager
+  "extension-manager.extensions": [
+    "eg2.tslint", // TypeScript linter
+    "ms-vscode.cpptools", // Cpp tools
+    "msjsdiag.debugger-for-chrome", // Debugger for Chrome
+    "robertohuertasm.vscode-icons" // Cool icons for files
+  ],
+  // When enabled, will trim trailing whitespace when you save a file
+  "files.trimTrailingWhitespace": true,
+  // Default end of line character
+  "files.eol": "\n",
+  // Glob patterns for excluding folders and files
+  "files.exclude": {
+    "**/*.build": true,
+    "**/*.git": true,
+    "**/*.err": true,
+    "**/*.rec": true,
+    "**/*.log": false,
+    "**/*.evt": true,
+    "**/buildfre.*": true,
+    "**/buildchk.*": true,
+    "**/.DS_Store": true,
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*notifications/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
+  },
+  // Glob patterns for excluding files and folders in searches
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    ".build/**": true,
+    "out*/**": true,
+    "i18n/**": true,
+    "extensions/**/out/**": true,
+    "*.min.js": true
+  },
+  // Enable linter for TypeScript files
+  "tslint.enable": true,
+  "files.associations": {
+    "deque": "cpp",
+    "list": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp"
+  },
+  "git.ignoreMissingGitWarning": true,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "workbench.iconTheme": "material-icon-theme",
+  "grammarly.config.documentDialect": "american",
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono, monospace",
+  "prettier.withNodeModules": true,
+  "trailing-spaces.trimOnSave": true,
+  "prettier.enable": true,
+  "includeDocumentStart": true,
+  "update.enableWindowsBackgroundUpdates": false,
+  "extensions.autoCheckUpdates": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[typescriptreact]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": false
+  },
+  "task.allowAutomaticTasks": "on",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.accessibilitySupport": "off",
+  "editor.largeFileOptimizations": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "githubPullRequests.pullBranch": "never",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "explorer.confirmPasteNative": false,
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "Prettier-SQL.SQLFlavourOverride": "snowflake",
+  "cSpell.userWords": [
+    "Agentic",
+    "deepseek",
+    "ollama",
+    "openai",
+    "openrouter"
+  ],
+  "diffEditor.maxComputationTime": 0,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "github.copilot.editor.enableAutoCompletions": false,
+  "markdown-preview-enhanced.enablePreviewZenMode": true,
+  "files.watcherExclude": {
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*notifications/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
+  },
+  "explorer.confirmDelete": false,
+  "azureFunctions.showProjectWarning": false,
+  "diffEditor.renderSideBySide": true,
+  "workbench.editor.enablePreview": false,
+  "github.copilot.chat.generateTests.codeLens": true,
+  "github.copilot.chat.inlineChatCompletionTrigger.enabled": true,
+  "github.copilot.chat.inlineChatHint.enabled": true,
+  "github.copilot.chat.search.semanticTextResults": true,
+  "@azure.argTenant": "d8353d2a-b153-4d17-8827-902c51f72357",
+  "githubPullRequests.experimental.chat": true,
+  "githubPullRequests.experimental.notificationsView": true,
+  "githubPullRequests.experimental.useQuickChat": true,
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "docker-desktop"
+  ],
+  "trailing-spaces.deleteModifiedLinesOnly": true,
+  "github.copilot.chat.codesearch.enabled": true,
+  "github.copilot.chat.agent.thinkingTool": true,
+  "blockman.n01LineHeight": 0,
+  "augment.chat.userGuidelines": "",
+  "workbench.colorTheme": "GitHub Dark",
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "chat.mcp.gallery.enabled": true,
+  "github.copilot.nextEditSuggestions.enabled": true,
+  "claudeCode.preferredLocation": "panel"
+}

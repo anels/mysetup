@@ -1,0 +1,123 @@
+[credential]
+helper =
+helper = manager
+
+[filter "lfs"]
+process = git-lfs filter-process
+required = true
+clean = git-lfs clean -- %f
+smudge = git-lfs smudge -- %f
+
+[alias]
+alias = config --get-regexp ^alias\\.
+amend = commit --amend
+br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:blue)(%(committerdate:short)) [%(authorname)]' --sort=-committerdate
+bra = br -a
+discard = checkout --
+fame = !python -m gitfame
+sta = status --short --branch --untracked-files=normal
+uncommit = reset --soft HEAD^
+unstage = reset HEAD --
+cp = cherry-pick -x
+
+# logs
+lg = !git lg0 -15
+lg0 = log --graph --first-parent --abbrev-commit --decorate --color --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' # --since='2 weeks ago'
+lg1 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+last = log -1 HEAD
+today = log --since=midnight --color --graph \
+--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+--abbrev-commit
+yesterday = log --since yesterday --until=midnight --color --graph \
+--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(blue)[%an]%Creset' \
+--abbrev-commit
+history = log --graph --pretty=format:'%C(yellow)%h%Creset \
+            -%C(yellow)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' \
+--abbrev-commit --date=short --date-order -n30
+
+[init]
+defaultBranch = main
+
+[push]
+default = current # push should only push current branch, not all branches
+
+[help]
+autocorrect = 1
+
+[color]
+ui = auto
+[color "branch"]
+current = yellow reverse
+local = yellow
+remote = green
+[color "diff"]
+meta = yellow
+frag = magenta
+old = red
+new = green
+whitespace = red reverse
+[color "status"]
+added = yellow
+changed = green
+untracked = cyan
+
+[core]
+# whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+# editor = code --wait # https://stackoverflow.com/questions/2596805/how-do-i-make-git-use-the-editor-of-my-choice-for-commits?utm_source=pocket_mylist
+editor = vim --nofork --noplugin -u NONE # https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config?utm_source=pocket_mylist
+pager = delta
+autocrlf = false
+
+[interactive]
+diffFilter = delta --color-only
+[add.interactive]
+useBuiltin = false # required for git 2.37.0
+
+[delta]
+navigate = true # use n and N to move between diff sections
+side-by-side = true
+line-numbers = true
+light = false # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
+features = unobtrusive-line-numbers decorations
+whitespace-error-style = 22 reverse
+
+[delta "unobtrusive-line-numbers"]
+line-numbers = true
+line-numbers-minus-style = "#444444"
+line-numbers-zero-style = "#444444"
+line-numbers-plus-style = "#444444"
+line-numbers-left-format = "{nm:>4}┊"
+line-numbers-right-format = "{np:>4}│"
+line-numbers-left-style = blue
+line-numbers-right-style = blue
+
+[delta "decorations"]
+commit-decoration-style = bold yellow box ul
+file-style = bold yellow ul
+file-decoration-style = none
+hunk-header-decoration-style = yellow box
+
+[diff]
+# tool = meld
+noprefix = true
+renameLimit = 2500
+# colorMoved = True
+colorMoved = default
+[difftool]
+prompt = false
+[difftool "meld"]
+prompt = false
+external = 'Meld.exe "$LOCAL" "$REMOTE"'
+[difftool "vscode"]
+cmd = "code --wait --diff $LOCAL $REMOTE"
+
+[merge]
+# tool = vsdiffmerge
+conflictstyle = diff3
+[mergetool]
+prompt = true
+[mergetool "meld"]
+prompt = false
+external = Meld.exe
