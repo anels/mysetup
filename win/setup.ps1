@@ -152,11 +152,18 @@ if (Check-Command -cmdname "oh-my-posh") {
   New-Item -ItemType Directory -Force -Path $HOME\.pwsh | Out-Null
   New-SoftLink -Source $PSScriptRoot\oh-my-posh\ohmyposhv3.json -Target $HOME\.pwsh\ohmyposhv3.json
   New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $HOME\.pwsh\Microsoft.PowerShell_profile.ps1
+  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1 # All Users, All Hosts
+  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Microsoft.PowerShell_profile.ps1 # All Users, Current Host
+  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Profile.ps1 # Current User, All Hosts
+  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
+
+  $MyDocuments = [Environment]::GetFolderPath("MyDocuments")
+  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Profile.ps1 # Current User, All Hosts
+  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
 
   # $path = [Environment]::GetFolderPath("MyDocuments")+'\WindowsPowerShell'
   # New-Item -Path $path\Microsoft.PowerShell_profile.ps1 -ItemType SymbolicLink -Value $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Force
 
-  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1
 }
 
 # cmder

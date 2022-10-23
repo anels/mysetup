@@ -1,3 +1,5 @@
+$start = (Get-Date)
+
 if ($null -ne (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
   Import-Module -Name Terminal-Icons
 }
@@ -7,7 +9,7 @@ if ($null -ne (Get-Module -ListAvailable -Name Terminal-Icons).Name) {
 # Import-Module -Name PSFzf
 Import-Module -Name posh-git
 Import-Module -Name scoop-completion
-# Import-Module -name z
+Import-Module -name z
 
 
 if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Name -eq 'ConsoleHost')) {
@@ -20,8 +22,8 @@ if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Na
   Set-PSReadLineOption -EditMode Windows
 }
 
-# $omhJsonFilePath = "$HOME\.pwsh\ohmyposhv3.json"
 $omhJsonFilePath = "$env:POSH_THEMES_PATH\amro.omp.json"
+# $omhJsonFilePath = "$HOME\.pwsh\ohmyposhv3.json"
 # $omhJsonFilePath = "$env:POSH_THEMES_PATH\peru.omp.json"
 # $omhJsonFilePath = "$env:POSH_THEMES_PATH\ys.omp.json"
 # $omhJsonFilePath = "$env:POSH_THEMES_PATH\kali.omp.json"
@@ -30,6 +32,13 @@ $omhJsonFilePath = "$env:POSH_THEMES_PATH\amro.omp.json"
 if (($null -ne (Get-Command oh-my-posh -ErrorAction:SilentlyContinue).Name) -And (Test-Path -Path $omhJsonFilePath -PathType Leaf)) {
   # oh-my-posh --init --shell pwsh --config $omhJsonFilePath | Invoke-Expression | Out-Null
   oh-my-posh init pwsh --config $omhJsonFilePath | Invoke-Expression
+}
+else {
+  Invoke-Expression (&starship init powershell)
+}
+
+if ((Get-Random -Minimum 0 -Maximum 1.0) -ge 0.9) {
+  winfetch
 }
 
 # alias
@@ -59,3 +68,9 @@ Function Update-All {
   }
 }
 Set-Alias upall Update-All
+
+
+$end = (Get-Date)
+
+# Calculate elapsed time
+Write-Host "Initialization Time: $($end - $start)"

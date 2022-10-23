@@ -20,39 +20,43 @@ foreach ($bucket in $Buckets) {
 
 scoop install `
   7zip `
+  bat `
   bulk-crap-uninstaller `
-  posh-git `
   delta `
   dismplusplus `
-  bat `
+  ditto `
   duf `
   dust `
-  musicbee `
-  universal-ctags `
-  sysinternals `
-  ditto `
-  oh-my-posh `
   everything `
-  vim `
-  marktext `
-  notepadplusplus `
   imageglass `
+  jq `
+  coreutils `
+  marktext `
   meld `
-  pwsh `
+  musicbee `
+  nexusfont `
+  notepadplusplus `
+  oh-my-posh `
+  posh-git `
   potplayer `
+  psreadline `
+  pwsh `
+  scoop-completion `
+  snipaste `
+  sysinternals `
+  terminal-icons `
+  twinkle-tray `
+  universal-ctags `
+  vim `
   windirstat `
   winmerge `
-  twinkle-tray `
-  snipaste `
-  terminal-icons `
-  nexusfont `
-  psreadline `
-  less `
-  jq `
-  scoop-completion `
-  # z `
+  tldr `
+  z `
+  winfetch `
+  #neofetch `
   # fzf `
   # psfzf `
+  # less `
 
 # versions
 scoop install `
