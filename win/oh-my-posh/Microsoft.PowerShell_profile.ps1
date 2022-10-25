@@ -73,4 +73,4 @@ Set-Alias upall Update-All
 $end = (Get-Date)
 
 # Calculate elapsed time
-Write-Host "Initialization Time: $($end - $start)"
+Write-Host "Loaded $($MyInvocation.MyCommand.Path). Time: $($end - $start)"

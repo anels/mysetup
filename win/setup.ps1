@@ -73,6 +73,8 @@ Function Install-Scoop-Apps() {
     # Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
     irm get.scoop.sh | iex
     scoop install aria2
+    scoop config show_update_log $false
+    scoop config cat_style auto
     scoop config aria2-enabled true
     scoop config aria2-split 32
     scoop config aria2-max-connection-per-server 16
@@ -152,8 +154,8 @@ if (Check-Command -cmdname "oh-my-posh") {
   New-Item -ItemType Directory -Force -Path $HOME\.pwsh | Out-Null
   New-SoftLink -Source $PSScriptRoot\oh-my-posh\ohmyposhv3.json -Target $HOME\.pwsh\ohmyposhv3.json
   New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $HOME\.pwsh\Microsoft.PowerShell_profile.ps1
-  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1 # All Users, All Hosts
-  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Microsoft.PowerShell_profile.ps1 # All Users, Current Host
+  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1 # All Users, All Hosts
+  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Microsoft.PowerShell_profile.ps1 # All Users, Current Host
   # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Profile.ps1 # Current User, All Hosts
   # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
 

@@ -53,6 +53,7 @@ scoop install `
   tldr `
   z `
   winfetch `
+  windows-terminal `
   #neofetch `
   # fzf `
   # psfzf `
