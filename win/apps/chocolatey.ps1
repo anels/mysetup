@@ -5,15 +5,15 @@ Write-Host "Installing Applications from Choco..." -ForegroundColor Green
 Write-Host "------------------------------------" -ForegroundColor Green
 
 choco upgrade -yr --no-progress `
-  cmder `
-  contextmenumanager `
-  peazip `
-  powertoys `
-  teracopy `
-  treesizefree `
-  vscode `
-  eartrumpet `
-  sumatrapdf `
+peazip `
+powertoys `
+sumatrapdf `
+teracopy `
+  # contextmenumanager `
+  # eartrumpet `
+  # vscode `
+  # treesizefree `
+  # cmder `
   # chocolateygui `
   # delta `
   # dismplusplus `
@@ -61,6 +61,5 @@ choco upgrade -yr --no-progress `
 #   jetbrainsmononf `
 #   nerdfont-hack `
 #   sourcecodepro `
-
 
 RefreshEnv

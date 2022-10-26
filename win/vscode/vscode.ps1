@@ -27,6 +27,7 @@ $Extensions = @(
   #  TabNine.tabnine-vscode
   #  Tim-Koehler.helm-intellisense
   "aaron-bond.better-comments"
+  "helgardrichard.helium-icon-theme"
   "christian-kohler.path-intellisense"
   "DanSnow.vscode-dockerfilelint"
   "DavidAnson.vscode-markdownlint"
@@ -72,7 +73,8 @@ $Extensions = @(
   "shd101wyy.markdown-preview-enhanced"
   "sourcery.sourcery"
   "streetsidesoftware.code-spell-checker"
-  "SumitSaha.learn-with-sumit-theme"
+  "znck.grammarly"
+  # "SumitSaha.learn-with-sumit-theme"
   # "TamasGBarna.whalelint"
   "timonwong.shellcheck"
   "TylerLeonhardt.vscode-inline-values-powershell"

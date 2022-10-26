@@ -13,7 +13,7 @@ $Packages = @(
 
 if ($null -ne (Get-Command pip -ErrorAction:SilentlyContinue).Name) {
   $InstalledPackages = pip list -l --format json | jq -r .[].name
-  # gsudo python -m pip install --upgrade pip
+  python -m pip install --upgrade pip
   foreach ($package in $Packages) {
     if ($package -in $InstalledPackages) {
       Write-Host "${package} is already installed."
@@ -27,3 +27,6 @@ if ($null -ne (Get-Command pip -ErrorAction:SilentlyContinue).Name) {
 else {
   Write-Host -ForegroundColor Red "Python is not installed."
 }
+
+# pip install git+https://github.com/beancount/beanprice.git
+# pip install pricehist

@@ -20,8 +20,7 @@
   "editor.renderControlCharacters": true,
   "emmet.triggerExpansionOnTab": true,
   "indentRainbow.includedLanguages": [],
-  "workbench.iconTheme": "vscode-great-icons",
-  "editor.fontFamily": "JetBrainsMono NFM, FuraMono NF, SauceCodePro NFM, UbuntuMono NF, JetBrains Mono NL",
+  "editor.fontFamily": "CaskaydiaCove NF Mono, Anonymice NFM, FiraCode NFM, Hack NFM, Ubuntu NFM, SauceCodePro NFM, RobotoMono NFM, JetBrainsMono NFM, JetBrainsMonoNL NFM",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
   "cSpell.enableFiletypes": ["lookml", "powershell", "python"],
@@ -67,12 +66,13 @@
   "diffEditor.wordWrap": "off",
   "editor.inlayHints.enabled": false,
   "redhat.telemetry.enabled": false,
-  "workbench.colorTheme": "Visual Studio 2019 Dark",
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
   "cSpell.userWords": [
     "cursum",
+    "dtime",
+    "Exif",
     "Kubernetes",
     "msbuild",
     "Xunit"
@@ -82,7 +82,7 @@
     "editor.defaultFormatter": "ms-python.python"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -97,11 +97,100 @@
     "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
   },
   "sql.linter.run": "onType",
-  "diffEditor.ignoreTrimWhitespace": false,
   "extensions.ignoreRecommendations": true,
   "gitlens.showWelcomeOnInstall": false,
   "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "glassit.alpha": 245
+  "glassit.alpha": 245,
+  "telemetry.telemetryLevel": "off",
+  "terminal.integrated.defaultProfile.windows": "PowerShell Core",
+  "terminal.integrated.profiles.windows": {
+    "PowerShell Core": {
+      "path": "pwsh.exe",
+      "icon": "terminal-powershell",
+      "args": ["-NoLogo"]
+    },
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell",
+      "args": ["-NoLogo"]
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": ["/k"],
+      "icon": "terminal-cmd"
+    }
+  },
+  "[properties]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  // Disable welcome screen on startup
+  "workbench.welcome.enabled": false,
+
+  // Insert spaces when pressing Tab
+  "editor.insertSpaces": true,
+
+  // Minimap
+  "editor.minimap.enabled": true,
+
+  // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+  "editor.mouseWheelScrollSensitivity": 5,
+
+  // Extensions to be installed by the Extension Manager
+  "extension-manager.extensions": [
+    "eg2.tslint", // TypeScript linter
+    "ms-vscode.cpptools", // Cpp tools
+    "msjsdiag.debugger-for-chrome", // Debugger for Chrome
+    "robertohuertasm.vscode-icons" // Cool icons for files
+  ],
+
+  // When enabled, will trim trailing whitespace when you save a file
+  "files.trimTrailingWhitespace": true,
+
+  // Default end of line character
+  "files.eol": "\n",
+
+  // Glob patterns for excluding folders and files
+  "files.exclude": {
+    "**/*.build": true,
+    "**/*.git": true,
+    "**/*.err": true,
+    "**/*.rec": true,
+    "**/*.log": false,
+    "**/*.evt": true,
+    "**/buildfre.*": true,
+    "**/buildchk.*": true,
+    "**/.DS_Store": true
+  },
+
+  // Glob patterns for excluding files and folders in searches
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/bower_components": true,
+    ".build/**": true,
+    "out*/**": true,
+    "i18n/**": true,
+    "extensions/**/out/**": true,
+    "*.min.js": true
+  },
+
+  // Enable linter for TypeScript files
+  "tslint.enable": true,
+  "files.associations": {
+    "deque": "cpp",
+    "list": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp"
+  },
+  "git.ignoreMissingGitWarning": true,
+  "[dockerfile]": {
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+  },
+  "diffEditor.ignoreTrimWhitespace": false,
+  "workbench.iconTheme": "helium-icon-theme",
+  "grammarly.config.documentDialect": "american"
 }
