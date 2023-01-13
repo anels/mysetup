@@ -1,6 +1,6 @@
 [credential]
 helper =
-helper = manager-core
+helper = manager
 
 [filter "lfs"]
 process = git-lfs filter-process

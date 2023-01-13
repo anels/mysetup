@@ -4,62 +4,60 @@ Write-Host ""
 Write-Host "Installing Applications from Choco..." -ForegroundColor Green
 Write-Host "------------------------------------" -ForegroundColor Green
 
-choco upgrade -yr --no-progress `
-peazip `
-powertoys `
-sumatrapdf `
-teracopy `
-  # contextmenumanager `
-  # eartrumpet `
-  # vscode `
-  # treesizefree `
-  # cmder `
+# choco upgrade -yr --no-progress `
+  # 7zip `
+  # bulk-crap-uninstaller `
   # chocolateygui `
+  # cmder `
+  # contextmenumanager `
   # delta `
   # dismplusplus `
   # ditto `
+  # eartrumpet `
   # everything `
+  # geekuninstaller `
   # git `
+  # greenshot `
   # imageglass `
   # joplin `
   # marktext `
   # meld `
   # musicbee `
-  # notepadplusplus `
   # oh-my-posh `
+  # peazip `
   # poshgit `
   # potplayer `
   # powershell-core `
+  # powertoys `
+  # sumatrapdf `
   # sysinternals `
+  # teracopy `
+  # treesizefree `
   # universal-ctags `
   # vim `
+  # virtualbox `
   # volume2 `
-  # 7zip `
-  # bulk-crap-uninstaller `
+  # vscode `
   # windirstat `
   # winmerge `
-  # greenshot `
-  # geekuninstaller `
-  # eartrumpet `
-  # virtualbox `
 
 # devbox
 # choco upgrade -yr --no-progress `
-# dbeaver `
-# fiddler `
-# mRemoteNG `
+  # dbeaver `
+  # fiddler `
+  # mRemoteNG `
 
 # Fonts
 # choco uninstall -yr --no-progress `
-#   anonymouspro `
-#   cascadia-code-nerd-font `
-#   cascadiacode `
-#   FiraCode `
-#   firacodenf `
-#   hackfont `
-#   jetbrainsmono `
-#   jetbrainsmononf `
-#   nerdfont-hack `
-#   sourcecodepro `
+  #  anonymouspro `
+  #  cascadia-code-nerd-font `
+  #  cascadiacode `
+  #  FiraCode `
+  #  firacodenf `
+  #  hackfont `
+  #  jetbrainsmono `
+  #  jetbrainsmononf `
+  #  nerdfont-hack `
+  #  sourcecodepro `
 
 RefreshEnv

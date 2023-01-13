@@ -1,7 +1,7 @@
 [wsl2]
-memory=4GB # Limits VM memory in WSL 2 to 4 GB
+memory=32GB # Limits VM memory in WSL 2 to 4 GB
 
-processors=2 # Makes the WSL 2 VM use two virtual processors
+processors=4 # Makes the WSL 2 VM use two virtual processors
 
 # Sets amount of swap storage space to 8GB, default is 25% of available RAM
 swap=16GB

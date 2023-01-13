@@ -82,6 +82,7 @@ Function Install-Scoop() {
     scoop config cat_style auto
     scoop install git
     scoop install gsudo
+    scoop alias rm reinstall | Out-Null ; scoop alias add reinstall 'scoop uninstall $args[0]; scoop install $args[0]'
     Sync-EnvVariables
   }
 }
@@ -108,10 +109,10 @@ Write-Host "Enabling sudo..."
 gsudo config LogLevel "Error" | Out-Null
 gsudo cache on -d -1
 
-Install-Choco
+# Install-Choco
 
 gsudo . $PSScriptRoot\apps\scoop.ps1
-gsudo . $PSScriptRoot\apps\chocolatey.ps1
+# gsudo . $PSScriptRoot\apps\chocolatey.ps1
 
 . $PSScriptRoot\apps\pip.ps1
 
@@ -154,24 +155,22 @@ if (($null -eq $SafeDirectory) -Or (-not $SafeDirectory.Contains("*"))) {
 # }
 
 # oh-my-posh
-Write-Info "Setting up oh-my-posh..."
-if (Test-Command -cmdname "oh-my-posh") {
-  New-Item -ItemType Directory -Force -Path $HOME\.pwsh | Out-Null
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\ohmyposhv3.json -Target $HOME\.pwsh\ohmyposhv3.json
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $HOME\.pwsh\Microsoft.PowerShell_profile.ps1
-  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1 # All Users, All Hosts
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Microsoft.PowerShell_profile.ps1 # All Users, Current Host
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Profile.ps1 # Current User, All Hosts
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
+Write-Info "Setting up powershell..."
+New-Item -ItemType Directory -Force -Path $HOME\.pwsh | Out-Null
+# New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $HOME\.pwsh\Microsoft.PowerShell_profile.ps1
+New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Profile.ps1 # All Users, All Hosts
+# New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $PSHOME\Microsoft.PowerShell_profile.ps1 # All Users, Current Host
+# New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Profile.ps1 # Current User, All Hosts
+# New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $Home\Documents\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
 
-  $MyDocuments = [Environment]::GetFolderPath("MyDocuments")
-  # New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Profile.ps1 # Current User, All Hosts
-  New-SoftLink -Source $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
+$MyDocuments = [Environment]::GetFolderPath("MyDocuments")
+New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Profile.ps1 # Current User, All Hosts
+New-SoftLink -Source $PSScriptRoot\dotfiles\Microsoft.PowerShell_profile.ps1 -Target $MyDocuments\PowerShell\Microsoft.PowerShell_profile.ps1 # Current user, Current Host
 
-  # $path = [Environment]::GetFolderPath("MyDocuments")+'\WindowsPowerShell'
-  # New-Item -Path $path\Microsoft.PowerShell_profile.ps1 -ItemType SymbolicLink -Value $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Force
+# $path = [Environment]::GetFolderPath("MyDocuments")+'\WindowsPowerShell'
+# New-Item -Path $path\Microsoft.PowerShell_profile.ps1 -ItemType SymbolicLink -Value $PSScriptRoot\oh-my-posh\Microsoft.PowerShell_profile.ps1 -Force
 
-}
+
 
 # windows-terminal
 Write-Info "Setting up Windows Terminal..."

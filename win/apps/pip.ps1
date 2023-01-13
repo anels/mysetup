@@ -5,7 +5,6 @@ Write-Host "------------------------------------" -ForegroundColor Green
 $Packages = @(
   "wheel"
   "setuptools"
-  "windows-curses"
   "glances"
   "git-fame"
   "fava"

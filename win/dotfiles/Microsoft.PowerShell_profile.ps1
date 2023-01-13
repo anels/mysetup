@@ -36,30 +36,62 @@ if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Na
 
 # Oh-my-posh themes
 $myTheme = @(
+  "bubblesline"
+  "easy-term"
+  "jandedobbeleer"
+  "peru"
+  "wopian"
+  ###############
   "amro"
+  "catppuccin_mocha"
   "catppuccin"
+  "cobalt2"
+  "dracula"
+  "emodipt"
+  "froczh"
+  "gmay"
+  "gruvbox"
+  "half-life"
+  "hotstick.minimal"
   "huvix"
   "json"
+  "lambda"
+  "larserikfinholt"
+  "M365Princess"
+  "marcduiker"
+  "markbull"
   "material"
   "montys"
-  "patriksvensson"
+  "multiverse-neon"
+  "pararussel"
+  "powerline"
+  "probua.minimal"
   "pure"
-  "remk"
-  "robbyrussel"
+  "robbyrussell"
   "sorin"
   "space"
   "spaceship"
   "star"
   "stelbent-compact.minimal"
   "the-unnamed"
-  "tiwahu"
+  "tokyonight_storm"
   "tonybaloney"
   "unicorn"
-  "velvet"
   "wholespace"
-  "xtoys"
   "ys"
   "zash"
+)
+
+# Oh-my-posh themes
+$myThemeForPS5 = @(
+  "amro"
+  "catppuccin_mocha"
+  "darkblood"
+  "half-life"
+  "kali"
+  "onehalf.minimal"
+  "probua.minimal"
+  "ys"
 )
 
 Function Set-OhMyPoshThemes {
@@ -80,7 +112,12 @@ Function Set-OhMyPoshThemes {
 
 }
 
-$theme = Get-Random -InputObject $myTheme
+if ( $PSVersionTable.PSVersion.Major -eq 5) {
+  $theme = Get-Random -InputObject $myThemeForPS5
+} else {
+  $theme = Get-Random -InputObject $myTheme
+}
+
 if (-Not (Set-OhMyPoshThemes $theme)) {
   Invoke-Expression (&starship init powershell)
 }
@@ -160,11 +197,13 @@ Function Update-All {
   scoop update -q gsudo
   gsudo {
     Write-Host "`nUpdate scoop apps..." -ForegroundColor Green
-    scoop update -a
+    scoop update -ag
     scoop cleanup *
     scoop cache rm *
-    Write-Host "`nUpdate choco apps..." -ForegroundColor Green
-    cup all -y
+    # Write-Host "`nUpdate choco apps..." -ForegroundColor Green
+    # cup all -y
+    # Write-Host "`nUpdate pip packages..." -ForegroundColor Green
+    # (pip list -lo --format json | ConvertFrom-Json).Name | % { pip install -qU $_ }
     Write-Host "`nUpdate tldr..." -ForegroundColor Green
     tldr -u
   }
@@ -172,15 +211,15 @@ Function Update-All {
 Set-Alias upall Update-All
 
 Function Open-PSHistory {
-  vim -c "set ff=dos" "+set nowrap" (Get-PSReadlineOption).HistorySavePath
-  # notepad++ (Get-PSReadlineOption).HistorySavePath
+  vim -c "set ff=dos" "+set nowrap" "+normal G$" (Get-PSReadlineOption).HistorySavePath
+  # notepad (Get-PSReadlineOption).HistorySavePath
 }
 Set-Alias ohis Open-PSHistory
 
 Function Open-Hosts {
   # gsudo vi C:\Windows\System32\drivers\etc\hosts
   gsudo vim $env:windir\System32\drivers\etc\hosts
-  # notepad++ (Get-PSReadlineOption).HistorySavePath
+  # gsudo notepad $env:windir\System32\drivers\etc\hosts
 }
 Set-Alias ohos Open-Hosts
 
