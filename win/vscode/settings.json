@@ -1,26 +1,14 @@
 {
   "editor.suggestSelection": "first",
-  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-  "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "git.autofetch": true,
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[beancount]": {
     "editor.defaultFormatter": "dongfg.vscode-beancount-formatter"
   },
   "beancountFormatter.fixedCJKWidth": true,
-  "sync.autoDownload": true,
-  "sync.autoUpload": true,
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.renderControlCharacters": true,
   "emmet.triggerExpansionOnTab": true,
   "indentRainbow.includedLanguages": [],
-  "editor.fontFamily": "CaskaydiaCove NF Mono, Anonymice NFM, FiraCode NFM, Hack NFM, Ubuntu NFM, SauceCodePro NFM, RobotoMono NFM, JetBrainsMono NFM, JetBrainsMonoNL NFM",
+  "editor.fontFamily": "CaskaydiaCove NFM, JetBrainsMono NFM, Anonymice NFM, FiraCode NFM, Hack NFM, Ubuntu NFM, SauceCodePro NFM, RobotoMono NFM, JetBrainsMonoNL NFM",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
   "cSpell.enableFiletypes": ["lookml", "powershell", "python"],
@@ -34,9 +22,9 @@
     "jupyter-notebook": "left"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "prettier.useEditorConfig": false,
+  "prettier.useEditorConfig": true,
   "gitlens.gitCommands.skipConfirmations": [
     "fetch:command",
     "switch:command",
@@ -69,40 +57,24 @@
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
   },
-  "cSpell.userWords": [
-    "cursum",
-    "dtime",
-    "Exif",
-    "Kubernetes",
-    "msbuild",
-    "Xunit"
-  ],
   "bracketPairColorizer.depreciation-notice": false,
   "[python]": {
     "editor.defaultFormatter": "ms-python.python"
   },
   "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.autoIndent": "advanced",
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    // "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
+    // "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.formatOnSave": false
   },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[latex]": {
-    "editor.defaultFormatter": "mathematic.vscode-latex"
-  },
+  "kubernetes-yaml-formatter.compactSequenceIndent": true,
+  "kubernetes-yaml-formatter.includeDocumentStart": true,
   "blockman.n01LineHeight": 0,
-  "editor.guides.bracketPairs": false,
-  "tabnine.experimentalAutoImports": true,
-  "[sql]": {
-    "editor.defaultFormatter": "dorzey.vscode-sqlfluff"
-  },
+  "editor.guides.bracketPairs": true,
   "sql.linter.run": "onType",
   "extensions.ignoreRecommendations": true,
   "gitlens.showWelcomeOnInstall": false,
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "glassit.alpha": 245,
   "telemetry.telemetryLevel": "off",
   "terminal.integrated.defaultProfile.windows": "PowerShell Core",
   "terminal.integrated.profiles.windows": {
@@ -190,7 +162,14 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
-  "diffEditor.ignoreTrimWhitespace": false,
   "workbench.iconTheme": "helium-icon-theme",
-  "grammarly.config.documentDialect": "american"
+  "grammarly.config.documentDialect": "american",
+  "terminal.integrated.fontFamily": "CaskaydiaCove NFM, monospace",
+  "prettier.withNodeModules": true,
+  "trailing-spaces.trimOnSave": true,
+  "prettier.enable": false,
+  "includeDocumentStart": true,
+  "update.enableWindowsBackgroundUpdates": false,
+  "extensions.autoCheckUpdates": false,
+  "diffEditor.ignoreTrimWhitespace": false
 }

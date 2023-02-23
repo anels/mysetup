@@ -230,7 +230,7 @@ Set-Alias printenv Get-EnvironmentVariables
 
 
 Function Get-MyPublicIP {
-  (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content
+  (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content | % {Set-Clipboard $_; Write-Output $_}
 }
 Set-Alias wimi Get-MyPublicIP
 
@@ -247,14 +247,18 @@ function Restart-PowerShell {
 }
 Set-Alias -Name 'reload' -Value 'Restart-PowerShell'
 
+if ($null -ne (Get-Command gsudo -ErrorAction:SilentlyContinue).Name) {
+  Set-Alias -Name 'sudo' -Value 'gsudo'
+}
+
+#########################################
+
 $end = (Get-Date)
 
 # Calculate elapsed time
 Write-Host "Loaded $($MyInvocation.MyCommand.Path). Time: $($end - $start)"
 
 $myProfileLoaded = $true
-
-
 
 # Install-Module -Name WriteAscii -Scope CurrentUser -Force
 # 'merry xmas!' | Write-Ascii -ForegroundColor Rainbow

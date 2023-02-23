@@ -1,5 +1,5 @@
 [wsl2]
-memory=32GB # Limits VM memory in WSL 2 to 4 GB
+memory=8GB # Limits VM memory in WSL 2 to 4 GB
 
 processors=4 # Makes the WSL 2 VM use two virtual processors
 
@@ -14,3 +14,9 @@ swapfile=C:\\temp\\wsl-swap.vhdx
 
 # Turns on output console showing contents of dmesg when opening a WSL 2 distro for debugging
 debugConsole=true
+
+# Disable page reporting so WSL retains all allocated memory claimed from Windows and releases none back when free
+# pageReporting=false
+
+# Disables nested virtualization
+# nestedVirtualization=false

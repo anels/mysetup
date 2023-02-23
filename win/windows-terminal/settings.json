@@ -37,11 +37,11 @@
         "defaults":
         {
             "antialiasingMode": "cleartype",
-            "backgroundImageOpacity": 0.20000000000000001,
+            "backgroundImageOpacity": 0.2,
             "font":
             {
                 "face": "FiraCode NFM Retina",
-                "size": 14
+                "size": 14.0
             }
         },
         "list":
@@ -94,6 +94,12 @@
                 "icon": "ms-appx:///ProfileIcons/pwsh.png",
                 "name": "PowerShell (Admin)",
                 "startingDirectory": "%USERPROFILE%"
+            },
+            {
+                "guid": "{d7b20cea-47a9-518c-95a4-c8bd91e2e1c6}",
+                "hidden": false,
+                "name": "Ubuntu 22.04.2 LTS",
+                "source": "CanonicalGroupLimited.Ubuntu22.04LTS_79rhkp1fndgsc"
             }
         ]
     },
@@ -329,5 +335,6 @@
             "white": "#C0C0C0",
             "yellow": "#808000"
         }
-    ]
+    ],
+    "themes": []
 }
