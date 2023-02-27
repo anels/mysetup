@@ -114,7 +114,8 @@ Function Set-OhMyPoshThemes {
 
 if ( $PSVersionTable.PSVersion.Major -eq 5) {
   $theme = Get-Random -InputObject $myThemeForPS5
-} else {
+}
+else {
   $theme = Get-Random -InputObject $myTheme
 }
 
@@ -230,7 +231,7 @@ Set-Alias printenv Get-EnvironmentVariables
 
 
 Function Get-MyPublicIP {
-  (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content | % {Set-Clipboard $_; Write-Output $_}
+  (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content | % { Set-Clipboard $_; Write-Output $_ }
 }
 Set-Alias wimi Get-MyPublicIP
 
