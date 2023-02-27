@@ -171,5 +171,8 @@
   "includeDocumentStart": true,
   "update.enableWindowsBackgroundUpdates": false,
   "extensions.autoCheckUpdates": false,
-  "diffEditor.ignoreTrimWhitespace": false
+  "diffEditor.ignoreTrimWhitespace": false,
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  }
 }
