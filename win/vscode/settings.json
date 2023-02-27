@@ -11,7 +11,11 @@
   "editor.fontFamily": "CaskaydiaCove NFM, JetBrainsMono NFM, Anonymice NFM, FiraCode NFM, Hack NFM, Ubuntu NFM, SauceCodePro NFM, RobotoMono NFM, JetBrainsMonoNL NFM",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
-  "cSpell.enableFiletypes": ["lookml", "powershell", "python"],
+  "cSpell.enableFiletypes": [
+    "lookml",
+    "powershell",
+    "python"
+  ],
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "workbench.editorAssociations": {
@@ -50,7 +54,9 @@
     "editor.lineHighlightBorder": "#9fced11f"
   },
   "editor.wordWrap": "off",
-  "editor.rulers": [80],
+  "editor.rulers": [
+    80
+  ],
   "diffEditor.wordWrap": "off",
   "editor.inlayHints.enabled": false,
   "redhat.telemetry.enabled": false,
@@ -81,19 +87,25 @@
     "PowerShell Core": {
       "path": "pwsh.exe",
       "icon": "terminal-powershell",
-      "args": ["-NoLogo"]
+      "args": [
+        "-NoLogo"
+      ]
     },
     "PowerShell": {
       "source": "PowerShell",
       "icon": "terminal-powershell",
-      "args": ["-NoLogo"]
+      "args": [
+        "-NoLogo"
+      ]
     },
     "Command Prompt": {
       "path": [
         "${env:windir}\\Sysnative\\cmd.exe",
         "${env:windir}\\System32\\cmd.exe"
       ],
-      "args": ["/k"],
+      "args": [
+        "/k"
+      ],
       "icon": "terminal-cmd"
     }
   },
@@ -102,16 +114,12 @@
   },
   // Disable welcome screen on startup
   "workbench.welcome.enabled": false,
-
   // Insert spaces when pressing Tab
   "editor.insertSpaces": true,
-
   // Minimap
   "editor.minimap.enabled": true,
-
   // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
   "editor.mouseWheelScrollSensitivity": 5,
-
   // Extensions to be installed by the Extension Manager
   "extension-manager.extensions": [
     "eg2.tslint", // TypeScript linter
@@ -119,13 +127,10 @@
     "msjsdiag.debugger-for-chrome", // Debugger for Chrome
     "robertohuertasm.vscode-icons" // Cool icons for files
   ],
-
   // When enabled, will trim trailing whitespace when you save a file
   "files.trimTrailingWhitespace": true,
-
   // Default end of line character
   "files.eol": "\n",
-
   // Glob patterns for excluding folders and files
   "files.exclude": {
     "**/*.build": true,
@@ -138,7 +143,6 @@
     "**/buildchk.*": true,
     "**/.DS_Store": true
   },
-
   // Glob patterns for excluding files and folders in searches
   "search.exclude": {
     "**/node_modules": true,
@@ -149,7 +153,6 @@
     "extensions/**/out/**": true,
     "*.min.js": true
   },
-
   // Enable linter for TypeScript files
   "tslint.enable": true,
   "files.associations": {
