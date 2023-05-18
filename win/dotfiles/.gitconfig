@@ -65,9 +65,8 @@ untracked = cyan
 
 [core]
 # whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
-# editor = code --wait # https://stackoverflow.com/questions/2596805/how-do-i-make-git-use-the-editor-of-my-choice-for-commits?utm_source=pocket_mylist
-# editor = 'C:/Program Files/Notepad++/notepad++.exe' -multiInst -notabbar
-editor = vim --nofork --noplugin -u NONE # https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config?utm_source=pocket_mylist
+editor = code --wait # https://stackoverflow.com/questions/2596805/how-do-i-make-git-use-the-editor-of-my-choice-for-commits?utm_source=pocket_mylist
+# editor = vim --nofork --noplugin -u NONE # https://git-scm.com/book/en/v2/Appendix-C:-Git-Commands-Setup-and-Config?utm_source=pocket_mylist
 pager = delta
 autocrlf = false
 

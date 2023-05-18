@@ -67,23 +67,30 @@ Function Install-Choco() {
 
 Function Install-Scoop() {
   if (-Not (Test-Command -cmdname 'scoop')) {
-    Write-Info "Installing Scoop for Windows..."
-    # Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-    irm get.scoop.sh | iex
-    scoop install aria2
-    scoop config show_update_log $false
-    scoop config aria2-enabled true
-    scoop config aria2-split 32
-    scoop config aria2-max-connection-per-server 16
-    scoop config aria2-min-split-size 1M
-    scoop config aria2-warning-enabled false
-    scoop config aria2-options -q
-    scoop install bat
-    scoop config cat_style auto
-    scoop install git
-    scoop install gsudo
-    scoop alias rm reinstall | Out-Null ; scoop alias add reinstall 'scoop uninstall $args[0]; scoop install $args[0]'
-    Sync-EnvVariables
+      Write-Info "Installing Scoop for Windows..."
+      # Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+      # Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+      irm get.scoop.sh | iex
+      $packages = @('aria2', 'bat', 'git', 'gsudo')
+      $scoopConfig = @{
+          'show_update_log' = $false
+          'aria2-enabled' = $true
+          'aria2-split' = 32
+          'aria2-max-connection-per-server' = 16
+          'aria2-min-split-size' = '1M'
+          'aria2-warning-enabled' = $false
+          'aria2-options' = '-q'
+          'cat_style' = 'auto'
+      }
+      foreach ($package in $packages) {
+          scoop install $package
+      }
+      foreach ($key in $scoopConfig.Keys) {
+          scoop config $key $scoopConfig[$key]
+      }
+      scoop alias rm reinstall | Out-Null
+      scoop alias add reinstall 'scoop uninstall $args[0]; scoop install $args[0]'
+      Sync-EnvVariables
   }
 }
 

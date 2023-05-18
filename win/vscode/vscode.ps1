@@ -1,7 +1,7 @@
 # VSCode
 Write-Host -ForegroundColor Green "Installing VSCode Extensions..."
 
-if ($null -eq (Get-Command code -ErrorAction:SilentlyContinue).Name) {
+if (!(Get-Command code -ErrorAction SilentlyContinue)) {
   Write-Host -ForegroundColor Red "VSCode is not installed."
   exit 0
 }

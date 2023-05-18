@@ -8,7 +8,7 @@
   "editor.renderControlCharacters": true,
   "emmet.triggerExpansionOnTab": true,
   "indentRainbow.includedLanguages": [],
-  "editor.fontFamily": "CaskaydiaCove NFM, JetBrainsMono NFM, Anonymice NFM, FiraCode NFM, Hack NFM, Ubuntu NFM, SauceCodePro NFM, RobotoMono NFM, JetBrainsMonoNL NFM",
+  "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font Mono, AnonymicePro Nerd Font Mono, FiraCode Nerd Font Mono, Hack Nerd Font Mono, SauceCodePro Nerd Font Mono",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
   "cSpell.enableFiletypes": [
@@ -41,11 +41,12 @@
     "editor.tabSize": 2
   },
   "[xml]": {
-    "editor.defaultFormatter": "DotJoshJohnson.xml"
+    "editor.defaultFormatter": "redhat.vscode-xml"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
   },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.renderWhitespace": "all",
   "indentRainbow.colorOnWhiteSpaceOnly": true,
   "editor.guides.indentation": false,
@@ -58,7 +59,7 @@
     80
   ],
   "diffEditor.wordWrap": "off",
-  "editor.inlayHints.enabled": false,
+  "editor.inlayHints.enabled": "on",
   "redhat.telemetry.enabled": false,
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp"
@@ -165,17 +166,36 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
-  "workbench.iconTheme": "helium-icon-theme",
+  "workbench.iconTheme": "material-icon-theme",
   "grammarly.config.documentDialect": "american",
-  "terminal.integrated.fontFamily": "CaskaydiaCove NFM, monospace",
+  "terminal.integrated.fontFamily": "FiraCode Nerd Font Mono, monospace",
   "prettier.withNodeModules": true,
   "trailing-spaces.trimOnSave": true,
-  "prettier.enable": false,
+  "prettier.enable": true,
   "includeDocumentStart": true,
   "update.enableWindowsBackgroundUpdates": false,
   "extensions.autoCheckUpdates": false,
-  "diffEditor.ignoreTrimWhitespace": false,
   "[jsonc]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "[typescriptreact]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Visual Studio Dark",
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "plaintext": true,
+    "markdown": false
+  },
+  "task.allowAutomaticTasks": "on",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "editor.accessibilitySupport": "off"
 }

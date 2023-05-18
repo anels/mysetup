@@ -59,10 +59,11 @@ $myTheme = @(
   "larserikfinholt"
   "M365Princess"
   "marcduiker"
-  "markbull"
   "material"
   "montys"
   "multiverse-neon"
+  "illusi0n"
+  "negligible"
   "pararussel"
   "powerline"
   "probua.minimal"
@@ -80,17 +81,19 @@ $myTheme = @(
   "wholespace"
   "ys"
   "zash"
+  #   "markbull"
 )
 
 # Oh-my-posh themes
 $myThemeForPS5 = @(
-  "amro"
-  "catppuccin_mocha"
   "darkblood"
   "half-life"
   "kali"
+  "material"
   "onehalf.minimal"
   "probua.minimal"
+  "pure"
+  "xtoy"
   "ys"
 )
 
