@@ -72,6 +72,7 @@ $CommonApps = $(
   "oh-my-posh" # A prompt theme engine for any shell
   "onefetch"
   "openjdk"
+  "openssh"
   "posh-git" # A PowerShell environment for Git
   "psreadline"
   "pwsh"
@@ -94,6 +95,9 @@ $CommonApps = $(
   "windows-terminal"
   "winfetch"
   "z" # A new cd command that helps you navigate faster by learning your habits
+  "screentogif"
+  "quicklook"
+  "wingetui"
   # "potplayer"
   # "powertoys"
   # "extras/balabolka"

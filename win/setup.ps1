@@ -71,7 +71,7 @@ Function Install-Scoop() {
       # Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
       # Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
       irm get.scoop.sh | iex
-      $packages = @('aria2', 'bat', 'git', 'gsudo')
+      $packages = @('aria2', 'bat', 'mingit', 'gsudo')
       $scoopConfig = @{
           'show_update_log' = $false
           'aria2-enabled' = $true

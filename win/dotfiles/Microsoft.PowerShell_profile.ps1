@@ -255,6 +255,10 @@ if ($null -ne (Get-Command gsudo -ErrorAction:SilentlyContinue).Name) {
   Set-Alias -Name 'sudo' -Value 'gsudo'
 }
 
+if ($null -ne (Get-Command kubectl -ErrorAction:SilentlyContinue).Name) {
+  Set-Alias -Name 'k' -Value 'kubectl'
+}
+
 #########################################
 
 $end = (Get-Date)
