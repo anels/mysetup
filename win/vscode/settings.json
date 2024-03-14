@@ -8,13 +8,14 @@
   "editor.renderControlCharacters": true,
   "emmet.triggerExpansionOnTab": true,
   "indentRainbow.includedLanguages": [],
-  "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font Mono, AnonymicePro Nerd Font Mono, FiraCode Nerd Font Mono, Hack Nerd Font Mono, SauceCodePro Nerd Font Mono",
+  "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font Mono, FiraCode Nerd Font Mono, Hack Nerd Font Mono, SauceCodePro Nerd Font Mono",
   "editor.fontLigatures": true,
   "editor.fontSize": 17,
   "cSpell.enableFiletypes": [
     "lookml",
     "powershell",
-    "python"
+    "python",
+    "markdown"
   ],
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
@@ -35,7 +36,6 @@
     "stash-push:command"
   ],
   "omnisharp.enableRoslynAnalyzers": true,
-  "editor.defaultFormatter": "EditorConfig.EditorConfig",
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell",
     "editor.tabSize": 2
@@ -56,7 +56,7 @@
   },
   "editor.wordWrap": "off",
   "editor.rulers": [
-    80
+    120
   ],
   "diffEditor.wordWrap": "off",
   "editor.inlayHints.enabled": "on",
@@ -66,11 +66,11 @@
   },
   "bracketPairColorizer.depreciation-notice": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.python"
+    "editor.defaultFormatter": "ms-python.autopep8"
   },
   "[yaml]": {
     "editor.autoIndent": "advanced",
-    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     // "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
     // "editor.defaultFormatter": "esbenp.prettier-vscode"
     "editor.formatOnSave": false
@@ -195,7 +195,11 @@
     "markdown": false
   },
   "task.allowAutomaticTasks": "on",
-  "diffEditor.ignoreTrimWhitespace": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "editor.accessibilitySupport": "off"
+  "editor.accessibilitySupport": "off",
+  "editor.largeFileOptimizations": false,
+  "security.workspace.trust.untrustedFiles": "open",
+  "githubPullRequests.pullBranch": "never",
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "explorer.confirmPasteNative": false
 }

@@ -148,6 +148,68 @@ Function Cleanup-GitBranch {
 }
 Set-Alias cugb Cleanup-GitBranch
 
+function Create-CherryPickPR {
+    param(
+        [Parameter(Mandatory=$true)][string]$commitToCherryPick,
+        [Parameter(Mandatory=$true)][string]$destinationBranch
+    )
+
+    try {
+        # Get current branch name
+        $currentBranch = git rev-parse --abbrev-ref HEAD
+        Write-Output "You are currently on branch $currentBranch"
+
+        # Take only first 7 characters of commit hash
+        $commitToCherryPick = $commitToCherryPick.substring(0,7)
+
+        # Get commit message
+        $commitMessage = (git log --format=%B -n 1 $commitToCherryPick).Split("`n")[0]
+
+        # Remove all special characters from $destinationBranch except "_", and ".".
+        $destinationBranchName = $destinationBranch -replace '[^a-zA-Z0-9._]', ''
+
+        # Generate new branch name based on commit hash and destinationBranch
+        $newBranchName = "cp/$commitToCherryPick-to-$destinationBranchName"
+
+        # Create a Pull Request against the destination branch using GitHub CLI 'gh'.
+        $prTitle = "Cherry-Pick: $commitMessage -> $destinationBranch"
+        Write-Output "Title: '$prTitle'"
+
+        # Cherry-pick commit to new branch
+        git checkout $destinationBranch
+        git pull
+        git checkout -b $newBranchName
+        git cherry-pick -x $commitToCherryPick
+
+        # Check if the cherry-pick command was successful
+        if ($LASTEXITCODE -ne 0) {
+            Write-Output "Conflict occurred during cherry-pick. Resolve the conflict and then you can"
+            Write-Output "use 'git cherry-pick --continue' to continue the cherry-pick process."
+            Write-Output "Then, you can push the branch to github use 'git push origin $newBranchName --force'"
+            Write-Output "Then create PR manually by 'gh pr create --base $destinationBranch --title '$prTitle' --fill'"
+            return
+        }
+
+        # Push the new branch
+        git push origin $newBranchName --force
+
+        Write-Output "Create PR by 'gh pr create --base $destinationBranch --title $prTitle --fill'"
+        gh pr create --base $destinationBranch --title $prTitle --fill
+        # gh pr create --base $destinationBranch' --title '$prTitle' --body 'Cherry-pick from $commitToCherryPick: $commitMessage'
+
+        # Switch back to the initial branch
+        git checkout $currentBranch
+    }
+    catch {
+        Write-Output $_.Exception.Message
+    }
+}
+# CreateCherryPickPR -commitToCherryPick "574c6c5ae5ae198e24fd9de38f52f48c38ad5eeb" -destinationBranch "release/v2022.10.8"
+Set-Alias ccppr Create-CherryPickPR
+# ccppr 574c6c5 release/v2022.10.8
+
+
+
 function Measure-Command2 ([ScriptBlock]$Expression, [int]$Samples = 1, [Switch]$Silent, [Switch]$Long) {
   <#
   .SYNOPSIS
