@@ -63,16 +63,17 @@ $CommonApps = $(
   "joplin"
   "jq"
   "less"
+  "lsd"
   "macast"
   "marktext"
   "meld"
   "musicbee"
   "nexusfont"
   "oh-my-posh" # A prompt theme engine for any shell
+  "onefetch"
   "openjdk"
+  "openssh"
   "posh-git" # A PowerShell environment for Git
-  "potplayer"
-  "powertoys"
   "psreadline"
   "pwsh"
   "python39"
@@ -83,6 +84,7 @@ $CommonApps = $(
   "sysinternals"
   "terminal-icons" # A PowerShell module to show file and folder icons in the terminal
   "tldr"
+  "nano"
   "treesize-free"
   "twinkle-tray"
   "universal-ctags"
@@ -93,6 +95,11 @@ $CommonApps = $(
   "windows-terminal"
   "winfetch"
   "z" # A new cd command that helps you navigate faster by learning your habits
+  "screentogif"
+  "quicklook"
+  "wingetui"
+  # "potplayer"
+  # "powertoys"
   # "extras/balabolka"
   # "extras/easy-context-menu"
   # "main/refreshenv" # included in Choco
@@ -133,7 +140,6 @@ Install-Apps $CommonApps
 #  helm
 #  openlens
 #  extras/lens
-#  extras/tailblazer
 #  mremoteng
 #  dbeaver
 #  github
