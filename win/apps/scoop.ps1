@@ -53,7 +53,7 @@ $CommonApps = $(
   "ditto"
   "duf"
   "dust"
-  "eartrumpet"
+#   "eartrumpet"
   "everything"
   "fastcopy"
   "gitahead"
@@ -158,7 +158,7 @@ Install-Apps $CommonApps
 # scoop install dorado/qqplayer
 
 $RegItems = @(
-  "$Home\scoop\apps\eartrumpet\current\add-startup.reg"
+#   "$Home\scoop\apps\eartrumpet\current\add-startup.reg"
   "$Home\scoop\apps\python39\current\install-pep-514.reg"
   "$Home\scoop\apps\vscode\current\install-associations.reg"
   "$Home\scoop\apps\windows-terminal\current\install-context.reg"

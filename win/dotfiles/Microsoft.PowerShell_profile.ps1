@@ -122,7 +122,7 @@ else {
   $theme = Get-Random -InputObject $myTheme
 }
 
-if (-Not (Set-OhMyPoshThemes $theme)) {
+if (-Not (Set-OhMyPoshThemes $theme) -and (Get-Command "starship" -ErrorAction SilentlyContinue)) {
   Invoke-Expression (&starship init powershell)
 }
 
