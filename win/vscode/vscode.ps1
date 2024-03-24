@@ -55,7 +55,6 @@ $Extensions = @(
   "leodevbro.blockman"
   "mechatroner.rainbow-csv"
   "mhutchie.git-graph"
-  "mintlify.document"
   "MS-CEINTL.vscode-language-pack-zh-hans"
   "ms-dotnettools.csharp"
   "ms-python.python"
