@@ -1,14 +1,130 @@
-if ($myProfileLoaded) {
-  return
-}
+if ($global:myProfileLoaded) { return }
+$global:myProfileLoaded = $true
 
-$start = (Get-Date)
+$profileLoadStart = Get-Date
 
+# Helper function for module loading
 Function Enable-Module ($moduleName) {
-  if ($null -ne (Get-Module -ListAvailable -Name $moduleName).Name) {
-    Import-Module -Name $moduleName
-  }
+    if ($null -ne (Get-Module -ListAvailable -Name $moduleName).Name) {
+        Import-Module -Name $moduleName
+    }
 }
+
+# Lazy loading function
+function Import-ModuleOnDemand {
+    param(
+        [Parameter(Mandatory=$true)]
+        [string]$ModuleName,
+        [string]$Command
+    )
+
+    if ([string]::IsNullOrEmpty($Command)) {
+        $Command = $ModuleName
+    }
+
+    if (!(Get-Command $Command -ErrorAction SilentlyContinue)) {
+        Enable-Module $ModuleName
+    }
+}
+
+# Create lazy-loading functions for modules
+${function:Get-Icon} = { Import-ModuleOnDemand 'Terminal-Icons'; Get-Icon @args }
+${function:Get-GitStatus} = { Import-ModuleOnDemand 'posh-git'; Get-GitStatus @args }
+${function:Get-DockerCompletion} = { Import-ModuleOnDemand 'posh-docker'; Get-DockerCompletion @args }
+${function:Get-ScoopCompletion} = { Import-ModuleOnDemand 'scoop-completion'; Get-ScoopCompletion @args }
+${function:z} = { Import-ModuleOnDemand 'z' 'z'; z @args }
+
+# Load gsudo only when needed
+$GsudoModuleFilePath = "$Home\scoop\apps\gsudo\current\gsudoModule.psd1"
+if (Test-Path $GsudoModuleFilePath -PathType Leaf) {
+    ${function:gsudo} = { Import-Module $GsudoModuleFilePath; gsudo @args }
+}
+
+# Optimize PSReadLine loading
+if ($host.Name -eq 'ConsoleHost' -and (Get-Module -ListAvailable -Name PSReadLine)) {
+    Import-Module PSReadLine
+    Set-PSReadLineOption -PredictionSource History -EditMode Windows
+    if ((Get-Host).UI.RawUI.MaxWindowSize.Width -ge 54) {
+        Set-PSReadLineOption -PredictionViewStyle ListView
+    }
+}
+
+# Oh-my-posh themes - moved to variables for faster access
+$myTheme = @(
+    "avit", "bubblesline", "easy-term", "jandedobbeleer", "peru", "wopian",
+    "amro", "catppuccin_mocha", "catppuccin", "cobalt2", "dracula", "emodipt",
+    "froczh", "gmay", "gruvbox", "half-life", "hotstick.minimal", "huvix",
+    "json", "lambda", "larserikfinholt", "M365Princess", "marcduiker", "material",
+    "montys", "multiverse-neon", "illusi0n", "negligible", "pararussel", "powerline",
+    "probua.minimal", "pure", "robbyrussell", "sorin", "space", "spaceship",
+    "star", "stelbent-compact.minimal", "the-unnamed", "tokyonight_storm",
+    "tonybaloney", "unicorn", "wholespace", "ys", "zash"
+)
+
+$myThemeForPS5 = @(
+    "darkblood", "half-life", "kali", "material", "onehalf.minimal",
+    "probua.minimal", "pure", "xtoy", "ys"
+)
+
+Function Set-OhMyPoshThemes {
+    param ([string]$name)
+
+    $omhJsonFilePath = "$env:POSH_THEMES_PATH\$name.omp.json"
+    if (($null -ne (Get-Command oh-my-posh -ErrorAction:SilentlyContinue)) -And (Test-Path -Path $omhJsonFilePath -PathType Leaf)) {
+        oh-my-posh init pwsh --config $omhJsonFilePath | Invoke-Expression
+        return $true
+    }
+    return $false
+}
+
+# Set theme in background job
+$null = Start-Job -ScriptBlock {
+    $theme = if ($PSVersionTable.PSVersion.Major -eq 5) {
+        Get-Random -InputObject $myThemeForPS5
+    } else {
+        Get-Random -InputObject $myTheme
+    }
+
+    if (-Not (Set-OhMyPoshThemes $theme) -and (Get-Command "starship" -ErrorAction SilentlyContinue)) {
+        Invoke-Expression (&starship init powershell)
+    }
+}
+
+# Move fastfetch to separate function
+function Show-SystemInfo {
+    if ((Get-Random -Minimum 0 -Maximum 1.0) -ge 0.1 -And
+        $Host.UI.RawUI.WindowSize.Width -ge 120 -And
+        $Host.UI.RawUI.WindowSize.Height -ge 32) {
+        fastfetch
+    }
+}
+
+# Keep existing functions but optimize their loading
+# ... [keeping your existing functions unchanged] ...
+
+# Aliases
+if ($null -ne (Get-Command gsudo -ErrorAction:SilentlyContinue).Name) {
+    Set-Alias -Name 'sudo' -Value 'gsudo'
+}
+
+if ($null -ne (Get-Command kubectl -ErrorAction:SilentlyContinue).Name) {
+    Set-Alias -Name 'k' -Value 'kubectl'
+}
+
+Set-Alias cugb Cleanup-GitBranch
+Set-Alias ccppr Create-CherryPickPR
+Set-Alias time Measure-Command2
+Set-Alias upall Update-All
+Set-Alias ohis Open-PSHistory
+Set-Alias ohos Open-Hosts
+Set-Alias printenv Get-EnvironmentVariables
+Set-Alias chst CheckStatus
+Set-Alias wimi Get-MyPublicIP
+Set-Alias -Name 'reload' -Value 'Restart-PowerShell'
+
+
+
+Write-Host "Profile loaded in $((Get-Date) - $profileLoadStart)"
 
 # Modules
 # Import-Module -Name PSFzf
@@ -36,6 +152,7 @@ if (($null -ne (Get-Module -ListAvailable -Name PSReadLine).Name) -And ($host.Na
 
 # Oh-my-posh themes
 $myTheme = @(
+  "avit"
   "bubblesline"
   "easy-term"
   "jandedobbeleer"
@@ -122,12 +239,12 @@ else {
   $theme = Get-Random -InputObject $myTheme
 }
 
-if (-Not (Set-OhMyPoshThemes $theme)) {
+if (-Not (Set-OhMyPoshThemes $theme) -and (Get-Command "starship" -ErrorAction SilentlyContinue)) {
   Invoke-Expression (&starship init powershell)
 }
 
 if ((Get-Random -Minimum 0 -Maximum 1.0) -ge 0.1 -And $Host.UI.RawUI.WindowSize.Width -ge 120 -And $Host.UI.RawUI.WindowSize.Height -ge 32) {
-  winfetch
+  fastfetch
 }
 
 Function Cleanup-GitBranch {
@@ -155,6 +272,9 @@ function Create-CherryPickPR {
     )
 
     try {
+        # Get new commits
+        git fetch --all
+
         # Get current branch name
         $currentBranch = git rev-parse --abbrev-ref HEAD
         Write-Output "You are currently on branch $currentBranch"
@@ -183,10 +303,14 @@ function Create-CherryPickPR {
 
         # Check if the cherry-pick command was successful
         if ($LASTEXITCODE -ne 0) {
-            Write-Output "Conflict occurred during cherry-pick. Resolve the conflict and then you can"
-            Write-Output "use 'git cherry-pick --continue' to continue the cherry-pick process."
-            Write-Output "Then, you can push the branch to github use 'git push origin $newBranchName --force'"
-            Write-Output "Then create PR manually by 'gh pr create --base $destinationBranch --title '$prTitle' --fill'"
+            Write-Output "Conflict occurred during cherry-pick. Resolve the conflict and then commit the cherry-pick changes."
+            Write-Output "----------------------------------------------------------------------"
+            Write-Output "    git cherry-pick --continue"
+            Write-Output "----------------------------------------------------------------------"
+            Write-Output "Then, you can push the branch to github and create PR manually by:"
+            Write-Output "----------------------------------------------------------------------"
+            Write-Output "    git push origin $newBranchName --force && gh pr create --base $destinationBranch --title '$prTitle' --fill"
+            Write-Output "----------------------------------------------------------------------"
             return
         }
 
@@ -295,6 +419,40 @@ Function Get-EnvironmentVariables {
 Set-Alias printenv Get-EnvironmentVariables
 
 
+function CheckStatus($url) {
+    $prev200Time = Get-Date
+
+    while ($true) {
+        $curTime = Get-Date
+        try {
+            Write-Host "$curTime - " -NoNewline
+            $response = Invoke-WebRequest -Uri $url -UseBasicParsing
+            if ($response.StatusCode -eq 200) {
+                $timeSpan = $curTime - $prev200Time
+                # Write-Host "$curTime - Status code: $($response.StatusCode). Time since last 200 code: $($timeSpan.TotalSeconds) seconds." -ForegroundColor Green
+                Write-Host "Status code: $($response.StatusCode)" -NoNewline -ForegroundColor Green
+                Write-Host " -- Time since last 200 code: $($timeSpan.TotalSeconds) seconds."
+                $prev200Time = $curTime
+            } else {
+                Write-Host "Status code: $($response.StatusCode)"
+            }
+        } catch {
+            if ($_.Exception.Response -is [System.Net.WebResponse]) {
+                Write-Host "Status code: $($_.Exception.Response.StatusCode.value__) (from exception)" -ForegroundColor Red
+            } else {
+                Write-Host "Failed: $($_.Exception.Message)" -ForegroundColor Yellow
+            }
+        }
+
+        Start-Sleep -Seconds 5 # delay between requests
+    }
+}
+
+#Simply call the function with url:
+# CheckStatus -url "https://insights-looker-alpha.gov.uipath-dev.com/alive"
+Set-Alias chst CheckStatus
+
+
 Function Get-MyPublicIP {
   (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content | % { Set-Clipboard $_; Write-Output $_ }
 }
@@ -326,7 +484,7 @@ if ($null -ne (Get-Command kubectl -ErrorAction:SilentlyContinue).Name) {
 $end = (Get-Date)
 
 # Calculate elapsed time
-Write-Host "Loaded $($MyInvocation.MyCommand.Path). Time: $($end - $start)"
+# Write-Host "Loaded $($MyInvocation.MyCommand.Path). Time: $($end - $start)"
 
 $myProfileLoaded = $true
 

@@ -7,80 +7,80 @@ if (!(Get-Command code -ErrorAction SilentlyContinue)) {
 }
 
 $Extensions = @(
-  #  4ops.terraform
-  #  AntonReshetov.masscode-assistant
-  #  buster.ndjson-colorizer
-  #  DominicVonk.vscode-resx-editor
-  #  hediet.debug-visualizer
-  #  James-Yu.latex-workshop
-  #  mathematic.vscode-latex
-  #  ms-azure-devops.azure-pipelines
-  #  ms-azuretools.vscode-azureresourcegroups
-  #  ms-azuretools.vscode-azurevirtualmachines
-  #  ms-azuretools.vscode-docker
-  #  ms-kubernetes-tools.vscode-kubernetes-tools
-  #  ms-vscode-remote.remote-containers
-  #  ms-vscode-remote.remote-wsl
-  #  ms-vscode.azure-account
-  #  ms-vscode.powershell
-  #  swyphcosmo.spellchecker
-  #  TabNine.tabnine-vscode
-  #  Tim-Koehler.helm-intellisense
-  "aaron-bond.better-comments"
-  "helgardrichard.helium-icon-theme"
-  "christian-kohler.path-intellisense"
-  "DavidAnson.vscode-markdownlint"
-  "DominicVonk.parameter-hints"
-  "dongfg.vscode-beancount-formatter"
-  "donjayamanne.githistory"
-  "eamodio.gitlens"
-  "EditorConfig.EditorConfig"
-  "emmanuelbeziat.vscode-great-icons"
-  "esbenp.prettier-vscode"
-  "eservice-online.vs-sharper"
-  "evan-buss.font-switcher"
-  "ex-codes.pine-script-syntax-highlighter"
-  "exiasr.hadolint"
-  "formulahendry.code-runner"
-  "foxundermoon.shell-format"
-  "Fr43nk.seito-openfile"
-  "GitHub.github-vscode-theme"
-  "GitHub.vscode-pull-request-github"
-  "Gruntfuggly.todo-tree"
-  "IBM.output-colorizer"
-  # "iceworks-team.iceworks-time-master"
-  "jeff-hykin.better-dockerfile-syntax"
-  "jgclark.vscode-todo-highlight"
-  "Lencerf.beancount"
-  "leodevbro.blockman"
-  "mechatroner.rainbow-csv"
-  "mhutchie.git-graph"
-  "mintlify.document"
-  "MS-CEINTL.vscode-language-pack-zh-hans"
-  "ms-dotnettools.csharp"
-  "ms-python.python"
-  "ms-python.vscode-pylance"
-  "oderwat.indent-rainbow"
-  "PKief.material-icon-theme"
-  "pnp.polacode"
-  "redhat.vscode-yaml"
-  "romario-stankovic.insomnia-theme"
-  "saekiraku.rainbow-fart"
-  "sgoley.lookml-syntax-highlighter"
-  "shakram02.bash-beautify"
-  "shardulm94.trailing-spaces"
-  "shd101wyy.markdown-preview-enhanced"
-  "sourcery.sourcery"
-  "streetsidesoftware.code-spell-checker"
-  "znck.grammarly"
-  "timonwong.shellcheck"
-  "TylerLeonhardt.vscode-inline-values-powershell"
-  "uctakeoff.vscode-counter"
-  "usernamehw.errorlens"
-  "vincaslt.highlight-matching-tag"
-  "waderyan.gitblame"
-  "yzhang.markdown-all-in-one"
-  "zhuangtongfa.material-theme"
+    #  4ops.terraform
+    #  AntonReshetov.masscode-assistant
+    #  buster.ndjson-colorizer
+    #  DominicVonk.vscode-resx-editor
+    #  hediet.debug-visualizer
+    #  James-Yu.latex-workshop
+    #  mathematic.vscode-latex
+    #  ms-azure-devops.azure-pipelines
+    #  ms-azuretools.vscode-azureresourcegroups
+    #  ms-azuretools.vscode-azurevirtualmachines
+    #  ms-azuretools.vscode-docker
+    #  ms-kubernetes-tools.vscode-kubernetes-tools
+    #  ms-vscode-remote.remote-containers
+    #  ms-vscode-remote.remote-wsl
+    #  ms-vscode.azure-account
+    #  ms-vscode.powershell
+    #  swyphcosmo.spellchecker
+    #  Tim-Koehler.helm-intellisense
+    # "iceworks-team.iceworks-time-master"
+    "aaron-bond.better-comments"
+    "anysphere.pyright"
+    "christian-kohler.path-intellisense"
+    "davidanson.vscode-markdownlint"
+    "dominicvonk.parameter-hints"
+    "dongfg.vscode-beancount-formatter"
+    "donjayamanne.githistory"
+    "eamodio.gitlens"
+    "editorconfig.editorconfig"
+    "emmanuelbeziat.vscode-great-icons"
+    "esbenp.prettier-vscode"
+    "eservice-online.vs-sharper"
+    "evan-buss.font-switcher"
+    "exiasr.hadolint"
+    "formulahendry.code-runner"
+    "foxundermoon.shell-format"
+    "fr43nk.seito-openfile"
+    "github.github-vscode-theme"
+    "github.vscode-github-actions"
+    "github.vscode-pull-request-github"
+    "gruntfuggly.todo-tree"
+    "helgardrichard.helium-icon-theme"
+    "ibm.output-colorizer"
+    "jeff-hykin.better-dockerfile-syntax"
+    "jgclark.vscode-todo-highlight"
+    "lencerf.beancount"
+    "leodevbro.blockman"
+    "mechatroner.rainbow-csv"
+    "mhutchie.git-graph"
+    "ms-azuretools.vscode-docker"
+    "ms-ceintl.vscode-language-pack-zh-hans"
+    "ms-dotnettools.csharp"
+    "ms-python.python"
+    "ms-python.vscode-pylance"
+    "ms-vscode.powershell"
+    "oderwat.indent-rainbow"
+    "pkief.material-icon-theme"
+    "pnp.polacode"
+    "redhat.vscode-yaml"
+    "romario-stankovic.insomnia-theme"
+    "saekiraku.rainbow-fart"
+    "sgoley.lookml-syntax-highlighter"
+    "shakram02.bash-beautify"
+    "shardulm94.trailing-spaces"
+    "shd101wyy.markdown-preview-enhanced"
+    "streetsidesoftware.code-spell-checker"
+    "timonwong.shellcheck"
+    "TylerLeonhardt.vscode-inline-values-powershell"
+    "uctakeoff.vscode-counter"
+    "usernamehw.errorlens"
+    "vincaslt.highlight-matching-tag"
+    "waderyan.gitblame"
+    "yzhang.markdown-all-in-one"
+    "zhuangtongfa.material-theme"
+    "znck.grammarly"
 )
 
 $InstalledExtensions = code --list-extensions

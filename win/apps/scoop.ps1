@@ -41,6 +41,7 @@ $GlobalApps = $(
 
 $CommonApps = $(
   "7zip"
+  "bat"
   "bitwarden"
   "bottom"
   "broot"
@@ -53,9 +54,8 @@ $CommonApps = $(
   "ditto"
   "duf"
   "dust"
-  "eartrumpet"
   "everything"
-  "fastcopy"
+  "fastfetch"
   "gitahead"
   "glary-utilities"
   "imageglass"
@@ -68,42 +68,41 @@ $CommonApps = $(
   "marktext"
   "meld"
   "musicbee"
+  "nano"
   "nexusfont"
   "oh-my-posh" # A prompt theme engine for any shell
-  "onefetch"
   "openjdk"
   "openssh"
   "posh-git" # A PowerShell environment for Git
   "psreadline"
   "pwsh"
-  "python39"
+  "python312"
+  "quicklook"
   "scoop-completion"
+  "screentogif"
   "snipaste-beta"
   "spacesniffer"
   "sumatrapdf"
   "sysinternals"
   "terminal-icons" # A PowerShell module to show file and folder icons in the terminal
   "tldr"
-  "nano"
   "treesize-free"
-  "twinkle-tray"
   "universal-ctags"
   "vim"
   "vscode"
   "wechat"
   "windirstat"
   "windows-terminal"
-  "winfetch"
   "z" # A new cd command that helps you navigate faster by learning your habits
-  "screentogif"
-  "quicklook"
-  "wingetui"
-  # "potplayer"
-  # "powertoys"
+  # "eartrumpet"
   # "extras/balabolka"
   # "extras/easy-context-menu"
   # "main/refreshenv" # included in Choco
   # "obsidian"
+  # "onefetch"
+  # "potplayer"
+  # "powertoys"
+  # "twinkle-tray"
   # fzf - A command-line fuzzy finder
   # googlechrome
   # less
@@ -139,10 +138,10 @@ Install-Apps $CommonApps
 # scoop install
 #  helm
 #  openlens
-#  extras/lens
 #  mremoteng
 #  dbeaver
 #  github
+#  gh
 #  zoom
 #  nodejs
 #  azure-cli
@@ -158,8 +157,8 @@ Install-Apps $CommonApps
 # scoop install dorado/qqplayer
 
 $RegItems = @(
-  "$Home\scoop\apps\eartrumpet\current\add-startup.reg"
-  "$Home\scoop\apps\python39\current\install-pep-514.reg"
+#   "$Home\scoop\apps\eartrumpet\current\add-startup.reg"
+  "$Home\scoop\apps\python312\current\install-pep-514.reg"
   "$Home\scoop\apps\vscode\current\install-associations.reg"
   "$Home\scoop\apps\windows-terminal\current\install-context.reg"
   "$Home\scoop\apps\7zip\current\install-context.reg"

@@ -27,7 +27,7 @@
     "jupyter-notebook": "left"
   },
   "[json]": {
-    "editor.defaultFormatter": "vscode.json-language-features"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "prettier.useEditorConfig": true,
   "gitlens.gitCommands.skipConfirmations": [
@@ -62,18 +62,19 @@
   "editor.inlayHints.enabled": "on",
   "redhat.telemetry.enabled": false,
   "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp"
+    "editor.defaultFormatter": "csharpier.csharpier-vscode"
   },
-  "bracketPairColorizer.depreciation-notice": false,
   "[python]": {
-    "editor.defaultFormatter": "ms-python.autopep8"
+    // "editor.defaultFormatter": "ms-python.black-formatter"
+    "editor.defaultFormatter": "charliermarsh.ruff"
   },
   "[yaml]": {
     "editor.autoIndent": "advanced",
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     // "editor.defaultFormatter": "kennylong.kubernetes-yaml-formatter",
     // "editor.defaultFormatter": "esbenp.prettier-vscode"
-    "editor.formatOnSave": false
+    "editor.formatOnSave": false,
+    "diffEditor.ignoreTrimWhitespace": true
   },
   "kubernetes-yaml-formatter.compactSequenceIndent": true,
   "kubernetes-yaml-formatter.includeDocumentStart": true,
@@ -142,7 +143,12 @@
     "**/*.evt": true,
     "**/buildfre.*": true,
     "**/buildchk.*": true,
-    "**/.DS_Store": true
+    "**/.DS_Store": true,
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*notifications/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
   },
   // Glob patterns for excluding files and folders in searches
   "search.exclude": {
@@ -201,5 +207,27 @@
   "security.workspace.trust.untrustedFiles": "open",
   "githubPullRequests.pullBranch": "never",
   "terminal.integrated.enableMultiLinePasteWarning": false,
-  "explorer.confirmPasteNative": false
+  "explorer.confirmPasteNative": false,
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "Prettier-SQL.SQLFlavourOverride": "snowflake",
+  "cSpell.userWords": [
+    "Runbook",
+    "tenantkey"
+  ],
+  "diffEditor.maxComputationTime": 0,
+  "diffEditor.ignoreTrimWhitespace": true,
+  "github.copilot.editor.enableAutoCompletions": true,
+  "markdown-preview-enhanced.enablePreviewZenMode": true,
+  "files.watcherExclude": {
+    "**/.trunk/*actions/": true,
+    "**/.trunk/*logs/": true,
+    "**/.trunk/*notifications/": true,
+    "**/.trunk/*out/": true,
+    "**/.trunk/*plugins/": true
+  },
+  "explorer.confirmDelete": false,
+  "azureFunctions.showProjectWarning": false,
+  "diffEditor.renderSideBySide": true
 }
