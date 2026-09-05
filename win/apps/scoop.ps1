@@ -186,7 +186,7 @@ Install-Packages -PackageManager 'scoop' -Packages $ShellTools -Label "Shell & P
 Install-Packages -PackageManager 'scoop' -Packages $DesktopApps -Label "Desktop Apps"
 Install-Packages -PackageManager 'scoop' -Packages $DevRuntimes -Label "Dev Runtimes"
 
-# Dev Tools — optional, prompt user
+# Dev Tools - optional, prompt user
 $installDevTools = Read-Host "`nInstall Dev Tools (K8s, Terraform, DB tools, etc.)? [y/N]"
 if ($installDevTools -eq 'y' -or $installDevTools -eq 'Y') {
   Install-Packages -PackageManager 'scoop' -Packages $DevTools -Label "Dev Tools"

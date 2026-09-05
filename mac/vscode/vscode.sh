@@ -14,63 +14,29 @@ if ! command_exists code; then
     return 0
 fi
 
+# Extensions that only make sense on macOS; the rest are shared with Windows
 EXTENSIONS=(
-    # "4ops.terraform"
-    # "james-yu.latex-workshop"
-    # "ms-azuretools.vscode-docker"
-    # "ms-kubernetes-tools.vscode-kubernetes-tools"
-    # "ms-vscode-remote.remote-containers"
-    # "ms-vscode.powershell"
-    # "tim-koehler.helm-intellisense"
-    "aaron-bond.better-comments"
-    "christian-kohler.path-intellisense"
-    "davidanson.vscode-markdownlint"
-    "dominicvonk.parameter-hints"
-    "dongfg.vscode-beancount-formatter"
-    "donjayamanne.githistory"
-    "eamodio.gitlens"
-    "editorconfig.editorconfig"
-    "emmanuelbeziat.vscode-great-icons"
-    "esbenp.prettier-vscode"
-    "evan-buss.font-switcher"
     "formulahendry.code-runner"
-    "foxundermoon.shell-format"
-    "fr43nk.seito-openfile"
-    "github.github-vscode-theme"
     "github.vscode-github-actions"
-    "github.vscode-pull-request-github"
     "gruntfuggly.todo-tree"
-    "helgardrichard.helium-icon-theme"
-    "ibm.output-colorizer"
-    "jeff-hykin.better-dockerfile-syntax"
-    "lencerf.beancount"
-    "mechatroner.rainbow-csv"
-    "mhutchie.git-graph"
-    "ms-azuretools.vscode-docker"
-    "ms-ceintl.vscode-language-pack-zh-hans"
-    "ms-python.python"
-    "ms-python.vscode-pylance"
-    "oderwat.indent-rainbow"
-    "pkief.material-icon-theme"
-    "pnp.polacode"
-    "redhat.vscode-yaml"
-    "shakram02.bash-beautify"
-    "shardulm94.trailing-spaces"
-    "shd101wyy.markdown-preview-enhanced"
-    "streetsidesoftware.code-spell-checker"
-    "timonwong.shellcheck"
-    "uctakeoff.vscode-counter"
-    "usernamehw.errorlens"
-    "vincaslt.highlight-matching-tag"
-    "waderyan.gitblame"
-    "yzhang.markdown-all-in-one"
-    "zhuangtongfa.material-theme"
 )
 
-INSTALLED_EXTENSIONS=$(code --list-extensions 2>/dev/null)
+SHARED_EXTENSIONS_FILE="$SCRIPT_DIR/../common/vscode/extensions.txt"
+if [[ -f "$SHARED_EXTENSIONS_FILE" ]]; then
+    while IFS= read -r line; do
+        line="${line%%#*}"
+        line="${line// /}"
+        [[ -n "$line" ]] && EXTENSIONS+=("$line")
+    done < "$SHARED_EXTENSIONS_FILE"
+else
+    error "Shared extension list not found: $SHARED_EXTENSIONS_FILE"
+fi
+
+# Match against one lowercased blob instead of grepping once per extension
+INSTALLED_EXTENSIONS=$'\n'"$(code --list-extensions 2>/dev/null | tr '[:upper:]' '[:lower:]')"$'\n'
 
 for ext in "${EXTENSIONS[@]}"; do
-    if echo "$INSTALLED_EXTENSIONS" | grep -qi "^${ext}$"; then
+    if [[ "$INSTALLED_EXTENSIONS" == *$'\n'"$ext"$'\n'* ]]; then
         echo -e "  \033[90m$ext (already installed)\033[0m"
     else
         echo -ne "  Installing $ext..."

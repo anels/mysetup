@@ -49,7 +49,7 @@ A cross-platform (macOS and Windows) environment setup and configuration toolkit
 
 ## Key Features
 
-- **Unified Configuration**: DRY approach. VS Code settings and global `.gitconfig` alias features are shared across both environments via the `common/` folder.
+- **Unified Configuration**: DRY approach. VS Code settings, the VS Code extension list, and global `.gitconfig` alias features are shared across both environments via the `common/` folder.
 - **Declarative Packages**: macOS uses a `Brewfile` (Homebrew Bundle), while Windows uses Scoop and pip.
 - **Safe Symlinks**: Automatic backup mechanism. If a target config file already exists, it is renamed with a timestamp backup (e.g., `settings.backup_20260326_120000`) before creating the symlink, preventing data loss.
 - **Windows Developer Mode Integration**: If Windows 11 Developer Mode is enabled, symlinks are created seamlessly without triggering UAC / `gsudo` elevation prompts.
@@ -62,7 +62,7 @@ A cross-platform (macOS and Windows) environment setup and configuration toolkit
 
 The setup scripts securely back up your existing files before creating symbolic links for:
 - **Git Config**: OS-specific `.gitconfig` with an `include` directive pointing to `common/git/.gitconfig`.
-- **VS Code**: Links `settings.json` and installs extensions.
+- **VS Code**: Links `settings.json` and installs the extensions listed in `common/vscode/extensions.txt` plus each platform's own additions.
 - **Terminal**: `settings.json` (Windows Terminal).
 - **Shell Profiles**: Links `Microsoft.PowerShell_profile.ps1` (Windows) and `.zshrc` (macOS).
 

@@ -17,12 +17,12 @@ $Packages = @(
     "toolong"      # long log file viewer TUI
 )
 
- if (Get-Command pip -ErrorAction SilentlyContinue) {
+if (Get-Command pip -ErrorAction SilentlyContinue) {
     python -m pip install --upgrade pip
     Install-Packages -Packages $Packages -PackageManager 'pip' -Label "Python (pip)"
- }
+}
 else {
-    Write-Error "Python is not installed."
+    Write-Host "Python is not installed. Skipping pip packages." -ForegroundColor Yellow
 }
 
 # pip install git+https://github.com/beancount/beanprice.git

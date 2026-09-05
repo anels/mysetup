@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # UtilityTools Module - Contains utility functions for macOS/Linux
 
 measure_command() {
@@ -71,7 +71,7 @@ open_shell_history() {
 
 get_public_ip() {
     local ip
-    ip="$(curl -s http://ifconfig.me/ip)"
+    ip="$(curl -fsS https://ifconfig.me/ip)"
     echo "$ip"
     # Copy to clipboard on macOS
     if command -v pbcopy &>/dev/null; then

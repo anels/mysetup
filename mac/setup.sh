@@ -84,6 +84,11 @@ if ! command_exists brew; then
     elif [[ -f /usr/local/bin/brew ]]; then
         eval "$(/usr/local/bin/brew shellenv)"
     fi
+
+    if ! command_exists brew; then
+        error "Homebrew is not on PATH. Open a new shell and re-run this script."
+        exit 1
+    fi
 fi
 
 # Disable Homebrew analytics
@@ -110,10 +115,8 @@ info "Setting up Git..."
 add_git_config() {
     local key="$1"
     local value="$2"
-    local existing
-    existing="$(git config --global --get-all "$key" 2>/dev/null || true)"
 
-    if ! echo "$existing" | grep -qF "$value"; then
+    if ! git config --global --get-all --fixed-value "$key" "$value" &>/dev/null; then
         git config --global --add "$key" "$value"
     fi
 }

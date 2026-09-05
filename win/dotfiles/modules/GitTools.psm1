@@ -95,10 +95,17 @@ function Clear-GitBranch {
         Write-Host "Not in a valid git repo. Please run this command inside a git repo."
         return
     }
-    git checkout $($(git symbolic-ref refs/remotes/origin/HEAD) -replace "^refs/remotes/origin/", "")
+    $defaultBranch = (git symbolic-ref refs/remotes/origin/HEAD) -replace "^refs/remotes/origin/", ""
+    if ($LASTEXITCODE -ne 0 -or -not $defaultBranch) {
+        Write-Host "Cannot determine default branch. Try: git remote set-head origin --auto"
+        return
+    }
+    git checkout $defaultBranch
     git pull
     # do actual thing
-    git branch | % { $_.Trim() } | ? { $_ -notmatch '^\*|(develop|main|master)$' } | % { git branch -D $_ }
+    $keep = @($defaultBranch, "develop", "main", "master")
+    $stale = @(git for-each-ref --format="%(refname:short)" refs/heads/ | Where-Object { $_ -notin $keep })
+    if ($stale) { git branch -D @stale }
     # see https://gitbetter.substack.com/p/how-to-clean-up-the-git-repo-and
     # git remote prune origin
     git repack

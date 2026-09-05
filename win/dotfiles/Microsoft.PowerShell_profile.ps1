@@ -138,7 +138,7 @@ $myThemeForPS5 = @(
 
 # System info display function
 function Show-SystemInfo {
-    if ((Get-Random -Minimum 0 -Maximum 1.0) -ge 0.1 -And
+    if ((Get-Random -Minimum 0 -Maximum 1.0) -lt 0.1 -And
         $Host.UI.RawUI.WindowSize.Width -ge 120 -And
         $Host.UI.RawUI.WindowSize.Height -ge 32) {
         fastfetch
@@ -149,22 +149,14 @@ function Show-SystemInfo {
 # Section: Alias Management
 #----------------------------------------------------------------------
 
-# Function to check if we should show warnings about missing functions
-function Should-WarnAboutMissingFunction {
-    param (
-        [string]$ModuleName,
-        [string]$FunctionName
-    )
+# A module counts as disabled when profile.local.ps1 sets it to $false or leaves it
+# out of $importModules entirely; missing functions from those are expected, not warnings.
+function Test-ModuleEnabled {
+    param ([string]$ModuleName)
 
-    # If importModules variable exists and module is disabled, don't show warnings
     $importModulesVar = Get-Variable -Name importModules -ValueOnly -ErrorAction SilentlyContinue
-    if ($importModulesVar -and $importModulesVar.ContainsKey($ModuleName) -and $importModulesVar[$ModuleName] -eq $false) {
-        Write-Verbose "Module $ModuleName is intentionally disabled, skipping warning for $FunctionName"
-        return $false
-    }
-
-    # Otherwise show warnings
-    return $true
+    if (-not $importModulesVar) { return $true }
+    return [bool]$importModulesVar[$ModuleName]
 }
 
 # Function to set aliases with proper fallbacks and warnings
@@ -193,36 +185,19 @@ function Set-FunctionAlias {
         return $true
     }
 
-    # Show warning if alias creation failed after initial checks
-    # Note: Only warn if BOTH primary and fallback are missing - this means module was intentionally not loaded
-    if (-not (Get-Command -Name $Function -ErrorAction SilentlyContinue) -and
-        (-not $FallbackFunction -or -not (Get-Command -Name $FallbackFunction -ErrorAction SilentlyContinue))) {
-
-        # Check if this is an intentionally disabled module by looking at $importModules
-        $moduleDisabled = $false
-        if (Get-Variable -Name importModules -ValueOnly -ErrorAction SilentlyContinue) {
-            # If module is explicitly disabled OR NOT PRESENT in the import list, consider it disabled
-            if ($importModules.ContainsKey($ModuleName) -and $importModules[$ModuleName] -eq $false) {
-                $moduleDisabled = $true
-            }
-            elseif (-not $importModules.ContainsKey($ModuleName)) {
-                # Module is not in the list (e.g. commented out), so assume it's disabled
-                $moduleDisabled = $true
-                Write-Verbose "Skipping warning for '$FunctionName' - module '$ModuleName' is not in import list"
-            }
+    # Both the function and its fallback are missing: warn only if the module was
+    # supposed to be loaded at all.
+    if (Test-ModuleEnabled -ModuleName $ModuleName) {
+        $msg = if ($FallbackFunction) {
+            "$Function (formerly $FallbackFunction) not found. The $Alias alias may not work."
+        } else {
+            "$Function not found. The $Alias alias may not work."
         }
-
-        # Only warn if module wasn't explicitly disabled
-        if (-not $moduleDisabled) {
-            $msg = "$Function not found. The $Alias alias may not work."
-            if ($FallbackFunction) {
-                $msg = "$Function (formerly $FallbackFunction) not found. The $Alias alias may not work."
-            }
-            if ($Description) {
-                $msg += " $Description"
-            }
-            Write-Warning $msg
-        }
+        if ($Description) { $msg += " $Description" }
+        Write-Warning $msg
+    }
+    else {
+        Write-Verbose "Skipping warning for '$Function' - module '$ModuleName' is disabled"
     }
 
     return $false
@@ -351,12 +326,9 @@ $aliasConfigs = @(
 
 # Batch process alias configurations, but only for enabled modules
 foreach ($config in $aliasConfigs) {
-    # Skip this alias if the module is disabled
-    if (Get-Variable -Name importModules -ErrorAction SilentlyContinue) {
-        if ($importModules.ContainsKey($config.Module) -and $importModules[$config.Module] -eq $false) {
-            Write-Verbose "Skipping alias '$($config.Alias)' - module '$($config.Module)' is disabled"
-            continue
-        }
+    if (-not (Test-ModuleEnabled -ModuleName $config.Module)) {
+        Write-Verbose "Skipping alias '$($config.Alias)' - module '$($config.Module)' is disabled"
+        continue
     }
 
     $params = @{

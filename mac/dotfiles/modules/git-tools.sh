@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 # GitTools Module - Contains git-related functions for macOS/Linux
 
 cherry_pick_pr() {
@@ -31,10 +31,14 @@ cherry_pick_pr() {
     # Get commit message
     local commit_message
     commit_message="$(git log --format=%B -n 1 "$commit_to_cherry_pick" | head -1)"
+    if [[ -z "$commit_message" ]]; then
+        echo "Error: commit $commit_to_cherry_pick not found." >&2
+        return 1
+    fi
 
     # Sanitize destination branch name for branch naming
     local destination_branch_name
-    destination_branch_name="$(echo "$destination_branch" | sed 's/[^a-zA-Z0-9._]//g')"
+    destination_branch_name="${destination_branch//[^a-zA-Z0-9._]/}"
 
     # Generate new branch name
     local new_branch_name="cp/${commit_to_cherry_pick}-to-${destination_branch_name}"
@@ -100,10 +104,16 @@ clear_git_branch() {
     git checkout "$default_branch"
     git pull
 
-    # Delete all local branches except develop, main, master
-    git branch | sed 's/^[* ]*//' | grep -vE '^(develop|main|master)$' | while read -r branch; do
-        git branch -D "$branch"
-    done
+    # Delete all local branches except the default branch and the usual long-lived ones
+    local branch
+    local -a stale
+    while read -r branch; do
+        case "$branch" in
+            "$default_branch" | develop | main | master) continue ;;
+        esac
+        stale+=("$branch")
+    done < <(git for-each-ref --format='%(refname:short)' refs/heads/)
+    (( ${#stale[@]} )) && git branch -D "${stale[@]}"
 
     # Cleanup
     git repack

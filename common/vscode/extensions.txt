@@ -1,0 +1,66 @@
+# VS Code extensions installed on both macOS and Windows.
+# One extension id per line. Blank lines and lines starting with # are ignored.
+# Platform-only extensions stay in mac/vscode/vscode.sh and win/vscode/vscode.ps1.
+aaron-bond.better-comments
+charliermarsh.ruff
+christian-kohler.path-intellisense
+csharpier.csharpier-vscode
+davidanson.vscode-markdownlint
+dominicvonk.parameter-hints
+dongfg.vscode-beancount-formatter
+donjayamanne.githistory
+eamodio.gitlens
+editorconfig.editorconfig
+emmanuelbeziat.vscode-great-icons
+esbenp.prettier-vscode
+evan-buss.font-switcher
+foxundermoon.shell-format
+fr43nk.seito-openfile
+github.github-vscode-theme
+github.vscode-pull-request-github
+helgardrichard.helium-icon-theme
+ibm.output-colorizer
+jeff-hykin.better-dockerfile-syntax
+lencerf.beancount
+mechatroner.rainbow-csv
+mhutchie.git-graph
+ms-azuretools.vscode-docker
+ms-ceintl.vscode-language-pack-zh-hans
+ms-python.python
+ms-python.vscode-pylance
+ms-vscode.powershell
+oderwat.indent-rainbow
+pkief.material-icon-theme
+pnp.polacode
+redhat.vscode-xml
+redhat.vscode-yaml
+shakram02.bash-beautify
+shardulm94.trailing-spaces
+shd101wyy.markdown-preview-enhanced
+streetsidesoftware.code-spell-checker
+timonwong.shellcheck
+uctakeoff.vscode-counter
+usernamehw.errorlens
+vincaslt.highlight-matching-tag
+waderyan.gitblame
+yzhang.markdown-all-in-one
+zhuangtongfa.material-theme
+
+# Considered and currently disabled - uncomment to install
+# 4ops.terraform
+# antonreshetov.masscode-assistant
+# buster.ndjson-colorizer
+# dominicvonk.vscode-resx-editor
+# hediet.debug-visualizer
+# iceworks-team.iceworks-time-master
+# james-yu.latex-workshop
+# mathematic.vscode-latex
+# ms-azure-devops.azure-pipelines
+# ms-azuretools.vscode-azureresourcegroups
+# ms-azuretools.vscode-azurevirtualmachines
+# ms-kubernetes-tools.vscode-kubernetes-tools
+# ms-vscode-remote.remote-containers
+# ms-vscode-remote.remote-wsl
+# ms-vscode.azure-account
+# swyphcosmo.spellchecker
+# tim-koehler.helm-intellisense

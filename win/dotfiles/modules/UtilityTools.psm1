@@ -140,7 +140,7 @@ function Test-WebsiteStatus {
 Set-Alias -Name CheckStatus -Value Test-WebsiteStatus
 
 function Get-MyPublicIP {
-  (Invoke-WebRequest -uri "http://ifconfig.me/ip").Content | % { Set-Clipboard $_; Write-Output $_ }
+  (Invoke-WebRequest -Uri "https://ifconfig.me/ip" -UseBasicParsing).Content | ForEach-Object { Set-Clipboard $_; Write-Output $_ }
 }
 
 function Invoke-CleanScript {
@@ -267,31 +267,6 @@ function Invoke-CleanScript {
   }
 
   return $process
-}
-
-function Restart-PowerShell {
-  <#
-  .SYNOPSIS
-    Restarts the current PowerShell session by reloading the profile.
-
-  .DESCRIPTION
-    Clears the console, resets the myProfileLoaded variable to allow profile reloading,
-    and then dots the profile script to reload it in the current session.
-
-  .EXAMPLE
-    Restart-PowerShell
-
-  .NOTES
-    This function is aliased as 'reload' in the profile.
-  #>
-  if ($host.Name -eq 'ConsoleHost') {
-    clear
-    $global:myProfileLoaded = $false
-    .$profile
-  }
-  else {
-    Write-Warning 'Only usable while in the PowerShell console host'
-  }
 }
 
 function Test-Admin {
@@ -473,163 +448,5 @@ function Install-IfMissing {
   return $result
 }
 
-function Install-PackageBatch {
-  <#
-  .SYNOPSIS
-    批量安装多个包，支持 scoop、pip 和 VS Code 扩展。
-
-  .DESCRIPTION
-    根据指定的包管理器类型（scoop/pip/vscode）批量安装包列表。
-    自动跳过已安装的包，提供详细的安装进度和结果摘要。
-    支持 -WhatIf 和 -Verbose 参数。
-
-  .PARAMETER PackageManager
-    包管理器类型，可选值：'scoop'、'pip'、'vscode'。
-
-  .PARAMETER Packages
-    要安装的包名称数组。
-
-  .PARAMETER Force
-    强制重新安装已存在的包（对 scoop 使用 --force，对 pip 使用 --force-reinstall）。
-
-  .EXAMPLE
-    Install-PackageBatch -PackageManager 'scoop' -Packages @('git', 'nodejs', 'python')
-
-  .EXAMPLE
-    Install-PackageBatch -PackageManager 'pip' -Packages @('requests', 'pandas', 'numpy') -Verbose
-
-  .EXAMPLE
-    Install-PackageBatch -PackageManager 'vscode' -Packages @('ms-python.python', 'esbenp.prettier-vscode')
-
-  .EXAMPLE
-    Install-PackageBatch -PackageManager 'scoop' -Packages @('git') -Force -WhatIf
-
-  .OUTPUTS
-    PSCustomObject. 包含安装摘要：总数、成功数、失败数、跳过数和详细结果列表。
-  #>
-  [CmdletBinding(SupportsShouldProcess)]
-  [OutputType([PSCustomObject])]
-  param (
-    [Parameter(Mandatory = $true)]
-    [ValidateSet('scoop', 'pip', 'vscode')]
-    [string]$PackageManager,
-
-    [Parameter(Mandatory = $true)]
-    [string[]]$Packages,
-
-    [Parameter()]
-    [switch]$Force
-  )
-
-  # 验证包管理器是否可用
-  $managerCommand = switch ($PackageManager) {
-    'scoop' { 'scoop' }
-    'pip' { 'pip' }
-    'vscode' { 'code' }
-  }
-
-  if (-not (Test-CommandInstalled -Command $managerCommand)) {
-    throw "$PackageManager is not installed. Please install it first."
-  }
-
-  $results = @()
-  $summary = [PSCustomObject]@{
-    Total      = $Packages.Count
-    Installed  = 0
-    Failed     = 0
-    Skipped    = 0
-    Results    = @()
-  }
-
-  Write-Host "`nInstalling $($Packages.Count) packages using $PackageManager..." -ForegroundColor Cyan
-
-  foreach ($package in $Packages) {
-    $result = [PSCustomObject]@{
-      Package = $package
-      Status  = ""
-      Error   = $null
-    }
-
-    # 检查包是否已安装（仅当不使用 -Force 时）
-    $isInstalled = $false
-    if (-not $Force) {
-      switch ($PackageManager) {
-        'scoop' {
-          $scoopList = scoop list $package 2>$null
-          $isInstalled = $scoopList -match $package
-        }
-        'pip' {
-          $pipList = pip list --format=freeze 2>$null | Select-String "^$package=="
-          $isInstalled = $null -ne $pipList
-        }
-        'vscode' {
-          $codeList = code --list-extensions 2>$null | Select-String "^$package$"
-          $isInstalled = $null -ne $codeList
-        }
-      }
-    }
-
-    if ($isInstalled) {
-      $result.Status = "AlreadyInstalled"
-      $summary.Skipped++
-      Write-Verbose "$package is already installed. Skipping."
-    }
-    elseif ($PSCmdlet.ShouldProcess($package, "Install using $PackageManager")) {
-      try {
-        Write-Host "  Installing $package..." -NoNewline
-
-        switch ($PackageManager) {
-          'scoop' {
-            $cmd = if ($Force) { "scoop install $package --force" } else { "scoop install $package" }
-            Invoke-Expression $cmd 2>&1 | Out-Null
-          }
-          'pip' {
-            $cmd = if ($Force) { "pip install --force-reinstall $package" } else { "pip install $package" }
-            Invoke-Expression $cmd 2>&1 | Out-Null
-          }
-          'vscode' {
-            $cmd = if ($Force) { "code --install-extension $package --force" } else { "code --install-extension $package" }
-            Invoke-Expression $cmd 2>&1 | Out-Null
-          }
-        }
-
-        if ($LASTEXITCODE -eq 0 -or $LASTEXITCODE -eq $null) {
-          $result.Status = "Installed"
-          $summary.Installed++
-          Write-Host " OK" -ForegroundColor Green
-        }
-        else {
-          throw "Installation command exited with code $LASTEXITCODE"
-        }
-      }
-      catch {
-        $result.Status = "Failed"
-        $result.Error = $_.Exception.Message
-        $summary.Failed++
-        Write-Host " FAILED" -ForegroundColor Red
-        Write-Verbose "Error: $($_.Exception.Message)"
-      }
-    }
-    else {
-      $result.Status = "WhatIf"
-      $summary.Skipped++
-    }
-
-    $results += $result
-  }
-
-  $summary.Results = $results
-
-  # 输出摘要
-  Write-Host "`n=== Installation Summary ===" -ForegroundColor Cyan
-  Write-Host "Total: $($summary.Total)" -ForegroundColor White
-  Write-Host "Installed: $($summary.Installed)" -ForegroundColor Green
-  Write-Host "Failed: $($summary.Failed)" -ForegroundColor Red
-  Write-Host "Skipped: $($summary.Skipped)" -ForegroundColor Yellow
-
-  return $summary
-}
-
 # Make sure to explicitly export the functions so they're available when imported
-Export-ModuleMember -Function Measure-Command2, Update-All, Open-PSHistory, Open-Hosts, Get-EnvironmentVariables, Test-WebsiteStatus, Get-MyPublicIP, Invoke-CleanScript, Restart-PowerShell, Test-Admin, Get-ScriptDirectory, Show-Path, Test-CommandInstalled, Install-IfMissing, Install-PackageBatch
-Export-ModuleMember -Alias CheckStatus
+Export-ModuleMember -Function Measure-Command2, Update-All, Open-PSHistory, Open-Hosts, Get-EnvironmentVariables, Test-WebsiteStatus, Get-MyPublicIP, Invoke-CleanScript, Test-Admin, Get-ScriptDirectory, Show-Path, Test-CommandInstalled, Install-IfMissing -Alias CheckStatus

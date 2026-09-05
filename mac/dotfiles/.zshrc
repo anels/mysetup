@@ -1,11 +1,14 @@
 #!/usr/bin/env zsh
 # Zsh Profile Configuration for macOS
 
-# Duplicate-load guard
-[[ -n "$MY_PROFILE_LOADED" ]] && return
-export MY_PROFILE_LOADED=1
+# Duplicate-load guard. Never exported: an inherited flag would make child
+# processes (VS Code terminals, nested shells) skip this file entirely, so an
+# exported value can only be a stale copy from an older profile.
+[[ -n ${MY_PROFILE_LOADED:-} && ${(t)MY_PROFILE_LOADED} != *export* ]] && return
+typeset -g MY_PROFILE_LOADED=1
 
 zmodload zsh/datetime
+zmodload -F zsh/stat b:zstat
 PROFILE_LOAD_START=$EPOCHREALTIME
 
 # Dedupe PATH and FPATH
@@ -90,14 +93,19 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 setopt PUSHD_SILENT
 
-# Enable completion
+# Enable completion. Only regenerate .zcompdump once a day.
 autoload -Uz compinit
-# Only regenerate .zcompdump once a day
-if [[ -n ~/.zcompdump(#qN.mh+24) ]]; then
-    compinit
+_zcompdump="${ZDOTDIR:-$HOME}/.zcompdump"
+zstat -A _zcompdump_mtime +mtime "$_zcompdump" 2>/dev/null || _zcompdump_mtime=(0)
+if (( _zcompdump_mtime[1] > EPOCHSECONDS - 86400 )); then
+    compinit -C -d "$_zcompdump"
 else
-    compinit -C
+    compinit -d "$_zcompdump"
+    # compinit only rewrites the dump when the completion set changed, so stamp it
+    # here to keep the once-a-day check meaningful.
+    touch "$_zcompdump"
 fi
+unset _zcompdump _zcompdump_mtime
 
 # Case-insensitive completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -164,7 +172,7 @@ set_omp_theme() {
 
 # Select and apply a random theme
 if [[ -n "$POSH_THEMES_PATH" && -d "$POSH_THEMES_PATH" ]]; then
-    RANDOM_THEME=${MY_THEMES[$((RANDOM % ${#MY_THEMES[@]}))]}
+    RANDOM_THEME=${MY_THEMES[$((RANDOM % ${#MY_THEMES[@]} + 1))]}
     echo "Theme: $RANDOM_THEME"
     if ! set_omp_theme "$RANDOM_THEME"; then
         # Fallback to starship
@@ -236,5 +244,8 @@ if command -v fastfetch &>/dev/null; then
         fastfetch
     fi
 fi
-export PATH="/usr/local/opt/openjdk@21/bin:$PATH"
-export PATH="$HOME/.dotnet/tools:$PATH"
+# Extra bin directories, prepended only when they exist
+for _extra_bin in "$_brew_prefix/opt/openjdk/bin" "$HOME/.dotnet/tools"; do
+    [[ -d "$_extra_bin" ]] && path=("$_extra_bin" $path)
+done
+unset _extra_bin

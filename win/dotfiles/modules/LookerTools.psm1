@@ -20,7 +20,7 @@ function Save-LookerJar {
         return
     }
 
-    mkdir -p $LATEST_VERSION
+    $null = New-Item -Path $LATEST_VERSION -ItemType Directory -Force
     Write-Output "Downloading looker.jar file to `"$LATEST_VERSION`""
     Invoke-WebRequest $info.url -OutFile $LATEST_VERSION/looker.jar
     Write-Output "Downloading looker-dependencies.jar file to `"$LATEST_VERSION`""
@@ -29,6 +29,31 @@ function Save-LookerJar {
 
 # Keep Download-LookerJar as an alias for backward compatibility
 New-Alias -Name Download-LookerJar -Value Save-LookerJar
+
+# Prompt for a value with retries. Returns $null when the user cancels or runs out of attempts.
+function Read-LookerValue {
+    param (
+        [Parameter(Mandatory = $true)][string]$Prompt,
+        [string]$Pattern,
+        [int]$MaxAttempts = 3
+    )
+
+    for ($attempt = 1; $attempt -le $MaxAttempts; $attempt++) {
+        if ($attempt -gt 1) { Write-Host "Attempt $attempt of $MaxAttempts" -ForegroundColor Yellow }
+        $value = Read-Host "$Prompt (or type 'cancel' to abort)"
+        if ($value -eq 'cancel') {
+            Write-Host "Operation cancelled by user." -ForegroundColor Cyan
+            return $null
+        }
+        if (-not [string]::IsNullOrWhiteSpace($value) -and ([string]::IsNullOrEmpty($Pattern) -or $value -match $Pattern)) {
+            return $value
+        }
+        Write-Error "Invalid input. Please try again."
+    }
+
+    Write-Error "Failed to provide a valid value after $MaxAttempts attempts. Operation aborted."
+    return $null
+}
 
 function Invoke-LookerDownload {
     param (
@@ -69,54 +94,23 @@ function Invoke-LookerDownload {
         }
     }
 
-    # Prompt for License Key if needed
+    # Prompt for the values that are still missing
     if ($needToPromptLicense) {
         Write-Host "Looker license key required but not found." -ForegroundColor Yellow
         Write-Host "You can add it to your profile.local.ps1 file to avoid this prompt in the future:" -ForegroundColor Yellow
         Write-Host "`$global:LOOKER_LICENSE_KEY = 'your-license-key'" -ForegroundColor Gray
 
-        $maxAttempts = 3
-        $attempt = 0
-        $validKey = $false
-
-        while (-not $validKey -and $attempt -lt $maxAttempts) {
-            $attempt++
-            if ($attempt > 1) { Write-Host "Attempt $attempt of $maxAttempts" -ForegroundColor Yellow }
-            $LOOKER_LICENSE = Read-Host "Please enter your Looker license key (or type 'cancel' to abort)"
-            if ($LOOKER_LICENSE -eq 'cancel') { Write-Host "Operation cancelled by user." -ForegroundColor Cyan; return }
-            if ([string]::IsNullOrWhiteSpace($LOOKER_LICENSE)) { Write-Error "License key cannot be empty. Please try again." }
-            else { $validKey = $true }
-        }
-
-        if (-not $validKey) {
-            Write-Error "Failed to provide a valid license key after $maxAttempts attempts. Operation aborted."
-            return
-        }
+        $LOOKER_LICENSE = Read-LookerValue -Prompt "Please enter your Looker license key"
+        if (-not $LOOKER_LICENSE) { return }
     }
 
-    # Prompt for Email if needed
     if ($needToPromptEmail) {
         Write-Host "Looker license email required but not found." -ForegroundColor Yellow
         Write-Host "You can add it to your profile.local.ps1 file to avoid this prompt in the future:" -ForegroundColor Yellow
         Write-Host "`$global:LOOKER_LICENSE_EMAIL = 'your-email@domain.com'" -ForegroundColor Gray
 
-        $maxAttempts = 3
-        $attempt = 0
-        $validEmail = $false
-
-        while (-not $validEmail -and $attempt -lt $maxAttempts) {
-            $attempt++
-            if ($attempt > 1) { Write-Host "Attempt $attempt of $maxAttempts" -ForegroundColor Yellow }
-            $LOOKER_EMAIL = Read-Host "Please enter your Looker license email (or type 'cancel' to abort)"
-            if ($LOOKER_EMAIL -eq 'cancel') { Write-Host "Operation cancelled by user." -ForegroundColor Cyan; return }
-            if ([string]::IsNullOrWhiteSpace($LOOKER_EMAIL) -or $LOOKER_EMAIL -notlike "*@*.*") { Write-Error "Please enter a valid email address. Please try again." }
-            else { $validEmail = $true }
-        }
-
-        if (-not $validEmail) {
-            Write-Error "Failed to provide a valid email address after $maxAttempts attempts. Operation aborted."
-            return
-        }
+        $LOOKER_EMAIL = Read-LookerValue -Prompt "Please enter your Looker license email" -Pattern '^[^@]+@[^@]+\.[^@]+$'
+        if (-not $LOOKER_EMAIL) { return }
     }
 
     # Final validation

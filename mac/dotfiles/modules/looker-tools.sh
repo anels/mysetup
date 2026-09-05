@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-# LookerTools — fetch Looker JAR + dependencies from apidownload.looker.com
+#!/usr/bin/env zsh
+# LookerTools - fetch Looker JAR + dependencies from apidownload.looker.com
 # Public functions: save_looker_jar, invoke_looker_download
 
 _LOOKER_MAX_PROMPT_ATTEMPTS=3
@@ -28,10 +28,12 @@ save_looker_jar() {
     # Usage: save_looker_jar <version> <license> <email>
     local LOOKER_VERSION="$1" LOOKER_LICENSE="$2" LOOKER_EMAIL="$3"
 
-    # Use a temp file — storing the response in a variable corrupts embedded \n in sha256 fields
+    # Use a temp file - storing the response in a variable corrupts embedded \n in sha256 fields.
+    # An EXIT trap set inside a zsh function runs on return, but after locals are
+    # popped, so bake the path into the trap instead of referencing the variable.
     local tmp_response
-    tmp_response=$(mktemp)
-    trap 'rm -f "$tmp_response"' RETURN
+    tmp_response=$(mktemp) || return 1
+    trap "rm -f ${(q)tmp_response}" EXIT
 
     curl -fsS -X POST \
         -H "Content-Type: application/json" \

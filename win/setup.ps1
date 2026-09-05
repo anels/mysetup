@@ -3,7 +3,7 @@
 
 if ($isAdmin) {
     Write-Host "Please run this script in non-admin" -ForegroundColor Yellow
-    exit 0
+    exit 1
 }
 
 # Helper Functions
@@ -42,7 +42,9 @@ Function New-SoftLink {
             if ($regKey -and $regKey.AllowDevelopmentWithoutDevLicense -eq 1) {
                 $devMode = $true
             }
-        } catch {}
+        } catch {
+            # Key is absent on systems that never enabled Developer Mode
+        }
 
         if (Test-Path $Target) {
             $item = Get-Item $Target -Force
@@ -61,15 +63,20 @@ Function New-SoftLink {
         }
 
         $isDir = Test-Path -PathType Container $Source
+        $mklinkArgs = if ($isDir) { "mklink /D `"$Target`" `"$Source`"" } else { "mklink `"$Target`" `"$Source`"" }
         if ($devMode) {
-            if ($isDir) { cmd.exe /c "mklink /D `"$Target`" `"$Source`" >nul 2>&1" } else { cmd.exe /c "mklink `"$Target`" `"$Source`" >nul 2>&1" }
+            cmd.exe /c "$mklinkArgs >nul 2>&1"
         } else {
-            if ($isDir) { gsudo cmd.exe /c "mklink /D `"$Target`" `"$Source`" >nul 2>&1" } else { gsudo cmd.exe /c "mklink `"$Target`" `"$Source`" >nul 2>&1" }
+            gsudo cmd.exe /c "$mklinkArgs >nul 2>&1"
+        }
+        if ($LASTEXITCODE -ne 0 -or -not (Test-Path $Target)) {
+            throw "mklink failed for $Target (exit code $LASTEXITCODE)"
         }
         Write-Host "Created Soft link: $Target -> $Source" -ForegroundColor Green
     }
     catch {
         Write-Host "Failed to create symlink: $_" -ForegroundColor Red
+        throw
     }
 }
 
@@ -83,26 +90,24 @@ Function Install-PackageManager {
     if (-Not ([SetupHelper]::TestCommand($Name))) {
         [SetupHelper]::WriteInfo("Installing $Name...")
         & $InstallScript
-        [SetupHelper]::SyncEnvVariables
+        [SetupHelper]::SyncEnvVariables()
     }
 }
+
+# Setup logging
+$logDir = Join-Path $PSScriptRoot "log"
+if (!(Test-Path $logDir)) { New-Item -Path $logDir -ItemType Directory | Out-Null }
+Start-Transcript -Path (Join-Path $logDir "setup_$(Get-Date -f yyyyMMddHHmmss).log")
 
 # Main setup execution with error handling
 try {
     $ErrorActionPreference = "Stop"
-
-    # Setup logging
-    $logDir = Join-Path $PSScriptRoot "log"
-    if (!(Test-Path $logDir)) { New-Item -Path $logDir -ItemType Directory | Out-Null }
-    $logFile = Join-Path $logDir "setup_$(Get-Date -f yyyyMMddHHmmss).log"
-    Start-Transcript -Path $logFile
 
     [SetupHelper]::WriteInfo("Starting Windows Setup Script v1.0")
 
     # Install package managers
     Install-PackageManager -Name "scoop" -InstallScript {
         Invoke-RestMethod get.scoop.sh | Invoke-Expression
-        scoop install aria2 gsudo git
 
         # Configure scoop
         $scoopConfig = @{
@@ -120,19 +125,25 @@ try {
         }
     }
 
+    # Scoop's own dependencies, ensured separately so a partial setup self-heals
+    foreach ($tool in @('aria2', 'gsudo', 'git')) {
+        Install-PackageManager -Name $tool -InstallScript ([scriptblock]::Create("scoop install $tool"))
+    }
+
     # Configure gsudo
     gsudo config LogLevel "Error" | Out-Null
     gsudo config CacheMode Auto
 
     # Install applications and configure system
     . $PSScriptRoot\apps\scoop.ps1
+    [SetupHelper]::SyncEnvVariables()
     . $PSScriptRoot\apps\pip.ps1
 
     # Setup VS Code if installed
     if ([SetupHelper]::TestCommand('code')) {
         [SetupHelper]::WriteInfo("Setting up VS Code...")
         . $PSScriptRoot\vscode\vscode.ps1
-        New-SoftLink -Source "$PSScriptRoot\..\common\vscode\settings.json" -Target $Home\scoop\apps\vscode\current\data\user-data\User\settings.json
+        New-SoftLink -Source "$PSScriptRoot\..\common\vscode\settings.json" -Target "$Home\scoop\apps\vscode\current\data\user-data\User\settings.json"
     }
 
     # Setup Windows Terminal
@@ -209,48 +220,11 @@ try {
 
         # Create symlink for PowerShell 7+ (pwsh) if installed
         if ([SetupHelper]::TestCommand('pwsh')) {
-            # Get pwsh profile path (different from Windows PowerShell)
-            # Use single quotes so pwsh evaluates $PROFILE in its own context, not execute it
+            # Single quotes so pwsh reports its own $PROFILE instead of expanding ours
             $pwshProfilePath = pwsh -NoProfile -Command '$PROFILE'
 
             if ($pwshProfilePath -and $pwshProfilePath -ne $PROFILE) {
-                # Create pwsh profile directory if needed
-                $pwshProfileDir = Split-Path -Parent $pwshProfilePath
-                if (-not (Test-Path $pwshProfileDir)) {
-                    New-Item -ItemType Directory -Path $pwshProfileDir -Force | Out-Null
-                }
-
-                # Delete existing profile if it's not a symlink or points wrong
-                if (Test-Path $pwshProfilePath) {
-                    $item = Get-Item $pwshProfilePath -Force
-                    if ($item.LinkType -ne 'SymbolicLink' -or $item.Target -ne $sourceProfile) {
-                        try {
-                            $devModeKey = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" -Name "AllowDevelopmentWithoutDevLicense" -ErrorAction SilentlyContinue
-                            if ($devModeKey -and $devModeKey.AllowDevelopmentWithoutDevLicense -eq 1) {
-                                Remove-Item $pwshProfilePath -Force
-                            } else {
-                                gsudo Remove-Item $pwshProfilePath -Force
-                            }
-                        } catch {
-                            gsudo Remove-Item $pwshProfilePath -Force
-                        }
-                    }
-                }
-
-                # Create symlink for pwsh profile
-                if (-not (Test-Path $pwshProfilePath)) {
-                    try {
-                        $devModeKey = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\AppModelUnlock" -Name "AllowDevelopmentWithoutDevLicense" -ErrorAction SilentlyContinue
-                        if ($devModeKey -and $devModeKey.AllowDevelopmentWithoutDevLicense -eq 1) {
-                            cmd.exe /c "mklink `"$pwshProfilePath`" `"$sourceProfile`" >nul 2>&1"
-                        } else {
-                            gsudo cmd.exe /c "mklink `"$pwshProfilePath`" `"$sourceProfile`" >nul 2>&1"
-                        }
-                    } catch {
-                        gsudo cmd.exe /c "mklink `"$pwshProfilePath`" `"$sourceProfile`" >nul 2>&1"
-                    }
-                    Write-Host "Created pwsh profile link: $pwshProfilePath -> $sourceProfile" -ForegroundColor Green
-                }
+                New-SoftLink -Source $sourceProfile -Target $pwshProfilePath
             }
         }
     }
@@ -264,6 +238,7 @@ try {
 }
 catch {
     Write-Host "Setup failed: $_" -ForegroundColor Red
+    exit 1
 }
 finally {
     Stop-Transcript
