@@ -1,45 +1,69 @@
-### PowerShell ###
-# Exclude packaged modules
-*.zip
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
 
-# Exclude .NET assemblies from source
-*.dll
+### Linux ###
+*~
+.Trash-*
 
 ### Windows ###
-# Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable
 ehthumbs.db
 ehthumbs_vista.db
-
-# Dump file
 *.stackdump
-
-# Folder config file
 [Dd]esktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Windows Installer files
 *.cab
 *.msi
 *.msix
 *.msm
 *.msp
-
-# Windows shortcuts
 *.lnk
 
-# VSCode
-.vscode
+### PowerShell ###
+*.zip
+*.dll
 
-# logs
+### IDE ###
+.idea/
+.vs/
+*.swp
+*.swo
+.vscode/*
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+### Python ###
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+### Env / secrets ###
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+### Local overrides ###
+*.local
+
+### Logs ###
 *.log
 
-# Claude
+### Claude / agents ###
 .claude/
 .omc/
 AGENTS.md
 CLAUDE.md
-.DS_Store

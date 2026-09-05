@@ -15,6 +15,12 @@ sta = status --short --branch --untracked-files=normal
 uncommit = reset --soft HEAD^
 unstage = reset HEAD --
 cp = cherry-pick -x
+sw = switch
+swc = switch -c
+rs = restore
+rss = restore --staged
+fixup = "!f() { git commit --fixup=$1; }; f"
+recent = "!git for-each-ref --sort=-committerdate refs/heads/ --format='%(refname:short)' | head -20"
 
 # logs
 lg = !git lg0 -15
@@ -38,9 +44,47 @@ defaultBranch = main
 
 [push]
 default = current
+autoSetupRemote = true
+followTags = true
+
+[pull]
+rebase = true
+ff = only
+
+[fetch]
+prune = true
+pruneTags = true
+fsckobjects = true
+
+[rebase]
+autoStash = true
+autoSquash = true
+updateRefs = true
+
+[rerere]
+enabled = true
+autoUpdate = true
+
+[branch]
+sort = -committerdate
+
+[column]
+ui = auto
+
+[commit]
+verbose = true
+
+[log]
+date = iso
+
+[transfer]
+fsckobjects = true
+
+[receive]
+fsckObjects = true
 
 [help]
-autocorrect = 1
+autocorrect = prompt
 
 [color]
 ui = auto
@@ -65,8 +109,6 @@ pager = delta
 
 [interactive]
 diffFilter = delta --color-only
-[add.interactive]
-useBuiltin = false
 
 [delta]
 navigate = true
@@ -95,7 +137,11 @@ hunk-header-decoration-style = yellow box
 [diff]
 noprefix = true
 renameLimit = 2500
+algorithm = histogram
 colorMoved = default
+colorMovedWS = allow-indentation-change
+mnemonicPrefix = true
+renames = copies
 [difftool]
 prompt = false
 [difftool "meld"]
@@ -105,7 +151,7 @@ external = 'Meld.exe "$LOCAL" "$REMOTE"'
 cmd = "code --wait --diff $LOCAL $REMOTE"
 
 [merge]
-conflictstyle = diff3
+conflictstyle = zdiff3
 [mergetool]
 prompt = true
 [mergetool "meld"]

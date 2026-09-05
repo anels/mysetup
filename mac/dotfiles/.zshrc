@@ -8,6 +8,9 @@ export MY_PROFILE_LOADED=1
 zmodload zsh/datetime
 PROFILE_LOAD_START=$EPOCHREALTIME
 
+# Dedupe PATH and FPATH
+typeset -U path PATH fpath FPATH
+
 #----------------------------------------------------------------------
 # Section: Initial Configuration
 #----------------------------------------------------------------------
@@ -57,6 +60,9 @@ if [[ -d "$MODULES_DIR" ]]; then
     if [[ "${LOAD_UTILITY_TOOLS:-true}" == "true" && -f "$MODULES_DIR/utility-tools.sh" ]]; then
         source "$MODULES_DIR/utility-tools.sh"
     fi
+    if [[ "${LOAD_LOOKER_TOOLS:-false}" == "true" && -f "$MODULES_DIR/looker-tools.sh" ]]; then
+        source "$MODULES_DIR/looker-tools.sh"
+    fi
 fi
 
 #----------------------------------------------------------------------
@@ -65,12 +71,24 @@ fi
 
 # History configuration
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=50000
+SAVEHIST=50000
 setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_VERIFY
 setopt SHARE_HISTORY
 setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
+
+# Directory navigation
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt PUSHD_SILENT
 
 # Enable completion
 autoload -Uz compinit
@@ -97,6 +115,17 @@ if command -v zoxide &>/dev/null; then
     eval "$(zoxide init zsh)"
 elif [[ -n "$_brew_prefix" && -f "$_brew_prefix/etc/profile.d/z.sh" ]]; then
     source "$_brew_prefix/etc/profile.d/z.sh"
+fi
+
+# fzf shell integration (zsh keybindings + completion)
+if command -v fzf &>/dev/null; then
+    _fzf_init=$(fzf --zsh 2>/dev/null)
+    if [[ -n "$_fzf_init" ]]; then
+        source <(printf '%s\n' "$_fzf_init")
+    elif [[ -f ~/.fzf.zsh ]]; then
+        source ~/.fzf.zsh
+    fi
+    unset _fzf_init
 fi
 
 #----------------------------------------------------------------------
@@ -167,25 +196,28 @@ if [[ "${LOAD_UTILITY_TOOLS:-true}" == "true" ]]; then
     alias spath='show_path'
 fi
 
+# Looker aliases (from modules)
+if [[ "${LOAD_LOOKER_TOOLS:-false}" == "true" ]]; then
+    alias dlook='invoke_looker_download'
+    alias savelook='save_looker_jar'
+fi
+
 # General aliases
 alias ll='ls -lah'
 alias la='ls -la'
 alias l='ls -l'
 
-# Use lsd if available
-if command -v lsd &>/dev/null; then
+# Modern CLI replacements
+if command -v eza &>/dev/null; then
+    alias ls='eza --icons --git'
+elif command -v lsd &>/dev/null; then
     alias ls='lsd'
 fi
-
-# Use bat if available
-if command -v bat &>/dev/null; then
-    alias cat='bat --paging=never'
-fi
-
-# kubectl alias
-if command -v kubectl &>/dev/null; then
-    alias k='kubectl'
-fi
+command -v bat &>/dev/null && alias cat='bat --paging=never'
+command -v dust &>/dev/null && alias du='dust'
+command -v duf &>/dev/null && alias df='duf'
+command -v btop &>/dev/null && alias top='btop'
+command -v kubectl &>/dev/null && alias k='kubectl'
 
 #----------------------------------------------------------------------
 # Section: Finalization
@@ -204,3 +236,5 @@ if command -v fastfetch &>/dev/null; then
         fastfetch
     fi
 fi
+export PATH="/usr/local/opt/openjdk@21/bin:$PATH"
+export PATH="$HOME/.dotnet/tools:$PATH"

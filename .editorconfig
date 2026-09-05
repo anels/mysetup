@@ -9,6 +9,8 @@ root = true
 
 # Default settings:
 [*]
+charset = utf-8
+end_of_line = lf
 insert_final_newline = true
 indent_style = space
 indent_size = 4
@@ -56,11 +58,11 @@ indent_size = 2
 [*.sh]
 end_of_line = lf
 
-[*.{cmd, bat, ps1}]
+[*.{cmd,bat,ps1}]
 end_of_line = crlf
 
 # Wix files
-[*.{wxs, wxi}]
+[*.{wxs,wxi}]
 indent_size = 4
 
 # JavaScript and TypeScript files

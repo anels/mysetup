@@ -5,6 +5,7 @@
 # Set to "true" to load, "false" to skip
 export LOAD_GIT_TOOLS="true"
 export LOAD_UTILITY_TOOLS="true"
+export LOAD_LOOKER_TOOLS="false"
 
 # Uncomment and set machine-specific variables:
 # export LOOKER_LICENSE_KEY="your-license-key"
